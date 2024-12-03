@@ -1,6 +1,7 @@
 ﻿using financesFlow.Comunicacao.Enums;
 using financesFlow.Comunicacao.Requests;
 using financesFlow.Comunicacao.Responses;
+using System.Xml.XPath;
 
 namespace financesFlow.Aplicacao.useCase.Despesa.Registrar;
 public class RegistrarDespesaUseCase
@@ -21,29 +22,12 @@ public class RegistrarDespesaUseCase
 
     private void Validate(RequestDespesaJson requestDespesa)
     {
-        var NomeVazio = string.IsNullOrWhiteSpace(requestDespesa.NomeDespesa);
-        var DataValidacao = DateTime.Compare(requestDespesa.DataDespesa, DateTime.UtcNow);
-        var MetodoPagamentoValido = Enum.IsDefined(typeof(MetodoPagamento), requestDespesa.FormaDePagamento);
-
-        if (NomeVazio)
+        var validator = new RegistrarValidacaoDespesa();
+        var result = validator.Validate(requestDespesa);
+        if(result.IsValid == false)
         {
-            throw new ArgumentException("O nome não pode ser vazio!");
+            var errorMessages = result.Errors.Select(err => err.ErrorMessage).ToList();
+            throw new ArgumentException(errorMessages.ToString());
         }
-
-        if (requestDespesa.ValorDespesa <= 0)
-        {
-            throw new ArgumentException("O valor deve ser maior que zero!");
-        }
-
-        if (DataValidacao > 0)
-        {
-            throw new ArgumentException("A data não pode ultrapassar o limite do dia atual!");
-        }
-
-        if (MetodoPagamentoValido == false)
-        {
-            throw new ArgumentException("Metodo de pagamento não encontrado!");
-        }
-
     }
 }

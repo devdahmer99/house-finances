@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using financesFlow.Aplicacao.Entidades.Despesa;
+﻿using financesFlow.Aplicacao.Entidades.Despesa;
 using Microsoft.EntityFrameworkCore;
 
 namespace financesFlow.Infra.Context
