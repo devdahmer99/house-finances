@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\financesFlow.Aplicacao\financesFlow.Aplicacao.csproj" />
+    <ProjectReference Include="..\financesFlow.Comunicacao\financesFlow.Comunicacao.csproj" />
+    <ProjectReference Include="..\financesFlow.Exception\financesFlow.Exception.csproj" />
+    <ProjectReference Include="..\financesFlow.Infra\financesFlow.Infra.csproj" />
+  </ItemGroup>
+
+</Project>
