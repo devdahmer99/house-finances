@@ -11,4 +11,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\financesFlow.Comunicacao\financesFlow.Comunicacao.csproj" />
+    <ProjectReference Include="..\financesFlow.Dominio\financesFlow.Dominio.csproj" />
+    <ProjectReference Include="..\financesFlow.Exception\financesFlow.Exception.csproj" />
+  </ItemGroup>
+
 </Project>

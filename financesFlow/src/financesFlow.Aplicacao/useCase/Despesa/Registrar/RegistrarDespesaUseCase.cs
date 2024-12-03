@@ -25,22 +25,22 @@ public class RegistrarDespesaUseCase
         var DataValidacao = DateTime.Compare(requestDespesa.DataDespesa, DateTime.UtcNow);
         var MetodoPagamentoValido = Enum.IsDefined(typeof(MetodoPagamento), requestDespesa.FormaDePagamento);
 
-        if(NomeVazio)
+        if (NomeVazio)
         {
             throw new ArgumentException("O nome não pode ser vazio!");
         }
 
-        if(requestDespesa.ValorDespesa <= 0)
+        if (requestDespesa.ValorDespesa <= 0)
         {
             throw new ArgumentException("O valor deve ser maior que zero!");
         }
 
-        if(DataValidacao > 0)
+        if (DataValidacao > 0)
         {
             throw new ArgumentException("A data não pode ultrapassar o limite do dia atual!");
         }
 
-        if(MetodoPagamentoValido == false)
+        if (MetodoPagamentoValido == false)
         {
             throw new ArgumentException("Metodo de pagamento não encontrado!");
         }
