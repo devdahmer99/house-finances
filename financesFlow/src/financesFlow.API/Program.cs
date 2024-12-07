@@ -1,3 +1,5 @@
+using financesFlow.API.Filtros;
+using financesFlow.API.Middleware;
 using financesFlow.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMvc(options => options.Filters.Add(typeof(FiltroDeExcecao)));
 builder.Services.AddDbContext<financesFlowDbContext>(options => options.UseSqlite("Data Source=financesFlow.db"));
 
 var app = builder.Build();
@@ -19,6 +22,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<CultureMiddleware>();
 
 app.UseHttpsRedirection();
 

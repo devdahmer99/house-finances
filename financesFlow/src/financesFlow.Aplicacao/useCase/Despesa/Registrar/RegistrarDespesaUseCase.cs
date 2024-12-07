@@ -1,7 +1,6 @@
-﻿using financesFlow.Comunicacao.Enums;
-using financesFlow.Comunicacao.Requests;
+﻿using financesFlow.Comunicacao.Requests;
 using financesFlow.Comunicacao.Responses;
-using System.Xml.XPath;
+using financesFlow.Exception.ExceptionsBase;
 
 namespace financesFlow.Aplicacao.useCase.Despesa.Registrar;
 public class RegistrarDespesaUseCase
@@ -27,7 +26,8 @@ public class RegistrarDespesaUseCase
         if(result.IsValid == false)
         {
             var errorMessages = result.Errors.Select(err => err.ErrorMessage).ToList();
-            throw new ArgumentException(errorMessages.ToString());
+
+            throw new ErrorOnValidationException(errorMessages);
         }
     }
 }

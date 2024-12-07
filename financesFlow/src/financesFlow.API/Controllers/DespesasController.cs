@@ -1,6 +1,5 @@
 ﻿using financesFlow.Aplicacao.useCase.Despesa.Registrar;
 using financesFlow.Comunicacao.Requests;
-using financesFlow.Comunicacao.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace financesFlow.API.Controllers;
@@ -12,23 +11,10 @@ public class DespesasController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult RegistrarDespesa([FromBody] RequestDespesaJson requestDespesa)
     {
-        try
-        {
-            var useCase = new RegistrarDespesaUseCase();
-            var response = useCase.Execute(requestDespesa);
+      var useCase = new RegistrarDespesaUseCase();
 
-            return Created(string.Empty, response);
+      var response = useCase.Execute(requestDespesa);
 
-        } catch(ArgumentException ex)
-        {
-            //var responseError = new ResponseErrorsJson
-            //{
-            //    ErrorsMessages = ex.Message,
-            //};
-            //return BadRequest(responseError);
-        } catch
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Erro Interno no Servidor");
-        }
+      return Created(string.Empty, response);    
     }
 }
