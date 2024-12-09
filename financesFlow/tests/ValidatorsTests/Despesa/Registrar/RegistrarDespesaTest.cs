@@ -1,10 +1,8 @@
 ﻿using CommonTestsUtilitis.Requests;
 using financesFlow.Aplicacao.useCase.Despesa.Registrar;
 using financesFlow.Comunicacao.Enums;
-using financesFlow.Comunicacao.Requests;
 using financesFlow.Exception;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace ValidatorsTests.Despesa.Registrar;
 public class RegistrarDespesaTest

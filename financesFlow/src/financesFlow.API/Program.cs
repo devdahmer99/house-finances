@@ -1,7 +1,5 @@
 using financesFlow.API.Filtros;
 using financesFlow.API.Middleware;
-using financesFlow.Infra.Context;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +10,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvc(options => options.Filters.Add(typeof(FiltroDeExcecao)));
-builder.Services.AddDbContext<financesFlowDbContext>(options => options.UseSqlite("Data Source=financesFlow.db"));
-
+builder.Services.Configure<RouteOptions>(options =>
+{
+    options.LowercaseQueryStrings = true;
+    options.LowercaseUrls = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

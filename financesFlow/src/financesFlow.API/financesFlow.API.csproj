@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="9.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\financesFlow.Aplicacao\financesFlow.Aplicacao.csproj" />
     <ProjectReference Include="..\financesFlow.Comunicacao\financesFlow.Comunicacao.csproj" />
     <ProjectReference Include="..\financesFlow.Exception\financesFlow.Exception.csproj" />
     <ProjectReference Include="..\financesFlow.Infra\financesFlow.Infra.csproj" />

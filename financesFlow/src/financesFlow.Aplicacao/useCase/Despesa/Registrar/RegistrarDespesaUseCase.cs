@@ -1,5 +1,6 @@
 ﻿using financesFlow.Comunicacao.Requests;
 using financesFlow.Comunicacao.Responses;
+using financesFlow.Dominio.Enums;
 using financesFlow.Exception.ExceptionsBase;
 
 namespace financesFlow.Aplicacao.useCase.Despesa.Registrar;
@@ -9,14 +10,16 @@ public class RegistrarDespesaUseCase
     {
         Validate(requestDespesa);
 
-        return new ResponseDespesaJson
+        var Entidade = new Dominio.Entidades.Despesa
         {
-            Despesa = requestDespesa.NomeDespesa,
+            NomeDespesa = requestDespesa.NomeDespesa,
             Descricao = requestDespesa.DescricaoDespesa,
-            Data = requestDespesa.DataDespesa,
-            Valor = requestDespesa.ValorDespesa,
-            Pagamento = requestDespesa.FormaDePagamento,
+            DataDespesa = requestDespesa.DataDespesa,
+            ValorDespesa = requestDespesa.ValorDespesa,
+            MetodoPagamento = (MetodoPagamento)requestDespesa.FormaDePagamento
         };
+
+        return new ResponseDespesaJson();
     }
 
     private void Validate(RequestDespesaJson requestDespesa)
