@@ -15,7 +15,7 @@ builder.Services.Configure<RouteOptions>(options =>
     options.LowercaseUrls = true;
 });
 
-builder.Services.AdicionarInfra();
+builder.Services.AdicionarInfra(builder.Configuration);
 builder.Services.AdicionarAplicacao();
 
 var app = builder.Build();
