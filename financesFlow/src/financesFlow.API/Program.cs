@@ -1,12 +1,11 @@
 using financesFlow.API.Filtros;
 using financesFlow.API.Middleware;
+using financesFlow.Aplicacao;
+using financesFlow.Infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvc(options => options.Filters.Add(typeof(FiltroDeExcecao)));
@@ -15,9 +14,12 @@ builder.Services.Configure<RouteOptions>(options =>
     options.LowercaseQueryStrings = true;
     options.LowercaseUrls = true;
 });
+
+builder.Services.AdicionarInfra();
+builder.Services.AdicionarAplicacao();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

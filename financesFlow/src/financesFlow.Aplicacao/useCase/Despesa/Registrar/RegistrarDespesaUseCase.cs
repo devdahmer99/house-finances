@@ -1,11 +1,17 @@
 ﻿using financesFlow.Comunicacao.Requests;
 using financesFlow.Comunicacao.Responses;
 using financesFlow.Dominio.Enums;
+using financesFlow.Dominio.Repositories.Despesas;
 using financesFlow.Exception.ExceptionsBase;
 
 namespace financesFlow.Aplicacao.useCase.Despesa.Registrar;
-public class RegistrarDespesaUseCase
+public class RegistrarDespesaUseCase : IRegistrarDespesaUseCase
 {
+    private readonly IRepositorioDespensa _repositorio;
+    public RegistrarDespesaUseCase(IRepositorioDespensa repositorio)
+    {
+        _repositorio = repositorio;
+    }
     public ResponseDespesaJson Execute(RequestDespesaJson requestDespesa)
     {
         Validate(requestDespesa);
@@ -18,6 +24,8 @@ public class RegistrarDespesaUseCase
             ValorDespesa = requestDespesa.ValorDespesa,
             MetodoPagamento = (MetodoPagamento)requestDespesa.FormaDePagamento
         };
+
+        _repositorio.AdicionarDespesa(Entidade);
 
         return new ResponseDespesaJson();
     }

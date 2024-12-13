@@ -9,10 +9,8 @@ public class DespesasController : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public IActionResult RegistrarDespesa([FromBody] RequestDespesaJson requestDespesa)
+    public IActionResult RegistrarDespesa([FromServices]IRegistrarDespesaUseCase useCase, [FromBody] RequestDespesaJson requestDespesa)
     {
-      var useCase = new RegistrarDespesaUseCase();
-
       var response = useCase.Execute(requestDespesa);
 
       return Created(string.Empty, response);    
