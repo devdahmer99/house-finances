@@ -1,4 +1,5 @@
-﻿using financesFlow.Dominio.Entidades;
+﻿using System.Runtime.CompilerServices;
+using financesFlow.Dominio.Entidades;
 using financesFlow.Dominio.Repositories.Despesas;
 using financesFlow.Infra.DataAccess;
 
@@ -10,10 +11,8 @@ internal class RepositorioDespesa : IRepositorioDespensa
     {
         _db = dbContext;
     }
-    public void AdicionarDespesa(Despesa despesa)
-    {
-
-        _db.Despesas.Add(despesa);
-        _db.SaveChanges();
+    public async Task AdicionarDespesa(Despesa despesa)
+    { 
+        await _db.Despesas.AddAsync(despesa);
     }
 }

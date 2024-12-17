@@ -1,10 +1,10 @@
-﻿using financesFlow.Dominio.Repositories.Despesas;
+﻿using financesFlow.Dominio.Repositories;
+using financesFlow.Dominio.Repositories.Despesas;
 using financesFlow.Infra.DataAccess;
 using financesFlow.Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace financesFlow.Infra;
 public static class ExtensaoInjecaoDependencia
@@ -17,6 +17,7 @@ public static class ExtensaoInjecaoDependencia
 
     private static void AdicionarRepositorios(IServiceCollection services)
     {
+        services.AddScoped<IUnidadeDeTrabalho, UnidadeDeTrabalho>();
         services.AddScoped<IRepositorioDespensa, RepositorioDespesa>();
     }
 

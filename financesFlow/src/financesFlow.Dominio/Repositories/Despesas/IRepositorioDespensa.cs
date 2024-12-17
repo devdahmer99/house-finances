@@ -3,6 +3,5 @@
 namespace financesFlow.Dominio.Repositories.Despesas;
 public interface IRepositorioDespensa
 {
-    public void AdicionarDespesa(Despesa despesa)
-    { }
+    Task AdicionarDespesa(Despesa despesa);
 }
