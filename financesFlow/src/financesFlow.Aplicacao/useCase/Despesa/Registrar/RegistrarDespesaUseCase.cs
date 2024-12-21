@@ -1,6 +1,6 @@
-﻿using financesFlow.Comunicacao.Requests;
+﻿using AutoMapper;
+using financesFlow.Comunicacao.Requests;
 using financesFlow.Comunicacao.Responses;
-using financesFlow.Dominio.Enums;
 using financesFlow.Dominio.Repositories;
 using financesFlow.Dominio.Repositories.Despesas;
 using financesFlow.Exception.ExceptionsBase;
@@ -10,28 +10,23 @@ public class RegistrarDespesaUseCase : IRegistrarDespesaUseCase
 {
     private readonly IRepositorioDespensa _repositorio;
     private readonly IUnidadeDeTrabalho _unidade;
-    public RegistrarDespesaUseCase(IRepositorioDespensa repositorio, IUnidadeDeTrabalho unidade)
+    private readonly IMapper _mapper;
+    public RegistrarDespesaUseCase(IRepositorioDespensa repositorio, IUnidadeDeTrabalho unidade, IMapper mapper)
     {
         _repositorio = repositorio;
         _unidade = unidade;
+        _mapper = mapper;
     }
     public async Task<ResponseDespesaJson> Execute(RequestDespesaJson requestDespesa)
     {
         Validate(requestDespesa);
 
-        var Entidade = new Dominio.Entidades.Despesa
-        {
-            NomeDespesa = requestDespesa.NomeDespesa,
-            Descricao = requestDespesa.DescricaoDespesa,
-            DataDespesa = requestDespesa.DataDespesa,
-            ValorDespesa = requestDespesa.ValorDespesa,
-            MetodoPagamento = (MetodoPagamento)requestDespesa.FormaDePagamento
-        };
+        var Entidade = _mapper.Map<Dominio.Entidades.Despesa>(requestDespesa);
 
         await _repositorio.AdicionarDespesa(Entidade);
         await _unidade.Commit();
 
-        return new ResponseDespesaJson();
+        return _mapper.Map<ResponseDespesaJson>(Entidade);
     }
 
     private void Validate(RequestDespesaJson requestDespesa)

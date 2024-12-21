@@ -8,12 +8,6 @@ namespace financesFlow.API.Controllers;
 [ApiController]
 public class DespesasController : ControllerBase
 {
-    //[HttpGet]
-    //[ProducesResponseType(StatusCodes.Status200OK)]
-    //public async Task<IActionResult> BuscaDespesas([FromServices] IBuscaDespesaUseCase useCase)
-    //{
-    //    var response = await useCase.Execute();
-    //}
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
