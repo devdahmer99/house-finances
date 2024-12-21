@@ -22,5 +22,6 @@ public class AutoMapping : Profile
     public void RetornaEntidade()
     {
         CreateMap<Despesa, ResponseDespesaJson>();
+        CreateMap<Despesa, ResponseShortDepesaJson>();
     }
 }

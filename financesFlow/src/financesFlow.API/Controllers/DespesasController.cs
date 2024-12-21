@@ -1,6 +1,7 @@
 ﻿using financesFlow.Aplicacao.useCase.Despesa.Busca;
 using financesFlow.Aplicacao.useCase.Despesa.Registrar;
 using financesFlow.Comunicacao.Requests;
+using financesFlow.Comunicacao.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace financesFlow.API.Controllers;
@@ -16,5 +17,20 @@ public class DespesasController : ControllerBase
       var response = await useCase.Execute(requestDespesa);
 
       return Created(string.Empty, response);    
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ResponseDespesasJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> BuscaTodasDespesas([FromServices] IBuscaDespesaUseCase useCase)
+    {
+        var response = await useCase.Execute();
+
+        if(response.Despesas.Count != 0)
+        {
+            return Ok(response);
+        }
+
+        return NoContent();
     }
 }

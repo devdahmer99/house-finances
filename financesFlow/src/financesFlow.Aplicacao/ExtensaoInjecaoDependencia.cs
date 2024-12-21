@@ -1,4 +1,5 @@
 ﻿using financesFlow.Aplicacao.AutoMapper;
+using financesFlow.Aplicacao.useCase.Despesa.Busca;
 using financesFlow.Aplicacao.useCase.Despesa.Registrar;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,5 +21,6 @@ public static class ExtensaoInjecaoDependencia
     private static void AdicionarUseCase(IServiceCollection services)
     {
         services.AddScoped<IRegistrarDespesaUseCase, RegistrarDespesaUseCase>();
+        services.AddScoped<IBuscaDespesaUseCase, BuscaDespesaUseCase>();
     }
 }

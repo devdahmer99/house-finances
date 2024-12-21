@@ -5,6 +5,6 @@ namespace financesFlow.Aplicacao.useCase.Despesa.Busca
 {
     public interface IBuscaDespesaUseCase
     {
-        ResponseDespesaJson Execute(RequestDespesaJson request);
+        Task<ResponseDespesasJson> Execute();
     }
 }
