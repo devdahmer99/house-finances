@@ -18,7 +18,7 @@ public static class ExtensaoInjecaoDependencia
     private static void AdicionarRepositorios(IServiceCollection services)
     {
         services.AddScoped<IUnidadeDeTrabalho, UnidadeDeTrabalho>();
-        services.AddScoped<IRepositorioDespensa, RepositorioDespesa>();
+        services.AddScoped<IRepositorioDespesa, RepositorioDespesa>();
     }
 
     private static void AdicionarDbContext(IServiceCollection services, IConfiguration configuration)

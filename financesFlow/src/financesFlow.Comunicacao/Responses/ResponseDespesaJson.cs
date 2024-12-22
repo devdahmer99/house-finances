@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace financesFlow.Comunicacao.Responses;
 public class ResponseDespesaJson
 {
-    public string Despesa { get; set; } = string.Empty;
+    public string NomeDespesa { get; set; } = string.Empty;
     public string Descricao { get; set; } = string.Empty;
     public DateTime Data { get; set; }
     public decimal Valor { get; set; }

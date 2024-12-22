@@ -8,10 +8,10 @@ using financesFlow.Exception.ExceptionsBase;
 namespace financesFlow.Aplicacao.useCase.Despesa.Registrar;
 public class RegistrarDespesaUseCase : IRegistrarDespesaUseCase
 {
-    private readonly IRepositorioDespensa _repositorio;
+    private readonly IRepositorioDespesa _repositorio;
     private readonly IUnidadeDeTrabalho _unidade;
     private readonly IMapper _mapper;
-    public RegistrarDespesaUseCase(IRepositorioDespensa repositorio, IUnidadeDeTrabalho unidade, IMapper mapper)
+    public RegistrarDespesaUseCase(IRepositorioDespesa repositorio, IUnidadeDeTrabalho unidade, IMapper mapper)
     {
         _repositorio = repositorio;
         _unidade = unidade;

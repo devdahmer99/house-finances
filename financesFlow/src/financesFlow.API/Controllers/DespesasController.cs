@@ -1,4 +1,5 @@
 ﻿using financesFlow.Aplicacao.useCase.Despesa.Busca;
+using financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
 using financesFlow.Aplicacao.useCase.Despesa.Registrar;
 using financesFlow.Comunicacao.Requests;
 using financesFlow.Comunicacao.Responses;
@@ -32,5 +33,17 @@ public class DespesasController : ControllerBase
         }
 
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(ResponseDespesaJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> BuscaDespesaPorId([FromRoute] long id, [FromServices] IBuscaDespesaPorIdUseCase useCase)
+    {
+        
+        var resultado = await useCase.Execute(id);
+
+        return Ok(resultado);
     }
 }

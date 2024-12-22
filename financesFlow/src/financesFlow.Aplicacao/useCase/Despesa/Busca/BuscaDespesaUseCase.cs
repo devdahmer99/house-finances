@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using financesFlow.Comunicacao.Requests;
 using financesFlow.Comunicacao.Responses;
 using financesFlow.Dominio.Repositories.Despesas;
 
@@ -7,10 +6,10 @@ namespace financesFlow.Aplicacao.useCase.Despesa.Busca
 {
     public class BuscaDespesaUseCase : IBuscaDespesaUseCase
     {
-        private readonly IRepositorioDespensa _repositorio;
+        private readonly IRepositorioDespesa _repositorio;
         private readonly IMapper _mapper;
 
-        public BuscaDespesaUseCase(IRepositorioDespensa repositorio, IMapper mapper)
+        public BuscaDespesaUseCase(IRepositorioDespesa repositorio, IMapper mapper)
         {
             _repositorio = repositorio;
             _mapper = mapper;

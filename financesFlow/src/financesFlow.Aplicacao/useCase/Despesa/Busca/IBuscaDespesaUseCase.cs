@@ -1,5 +1,4 @@
-﻿using financesFlow.Comunicacao.Requests;
-using financesFlow.Comunicacao.Responses;
+﻿using financesFlow.Comunicacao.Responses;
 
 namespace financesFlow.Aplicacao.useCase.Despesa.Busca
 {
