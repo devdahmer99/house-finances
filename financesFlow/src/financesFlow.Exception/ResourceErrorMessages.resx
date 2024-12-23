@@ -120,6 +120,9 @@
   <data name="DATA_INCORRETA_OU_MAIOR" xml:space="preserve">
     <value>A data não pode ultrapassar o limite do dia atual!</value>
   </data>
+  <data name="DESPESA_NAO_ENCONTRADA" xml:space="preserve">
+    <value>Despesa não encontrada na base de dados.</value>
+  </data>
   <data name="METODO_PAGAMENTO_INEXISTENTE" xml:space="preserve">
     <value>Metodo de pagamento não encontrado!</value>
   </data>

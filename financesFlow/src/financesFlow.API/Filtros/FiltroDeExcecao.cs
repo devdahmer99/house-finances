@@ -27,7 +27,13 @@ public class FiltroDeExcecao : IExceptionFilter
             var errorResponse = new ResponseErrorsJson(ex.Errors);
             context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
             context.Result = new BadRequestObjectResult(errorResponse);
-        } else
+        } else if(context.Exception is NotFoundException ex)
+        {
+            var errorResponse = new ResponseErrorsJson(ex.Message);
+            context.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            context.Result = new NotFoundObjectResult(errorResponse);
+        } 
+        else
         {
             var errorResponse = new ResponseErrorsJson(context.Exception.Message);
             context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using financesFlow.Comunicacao.Responses;
 using financesFlow.Dominio.Repositories.Despesas;
+using financesFlow.Exception;
+using financesFlow.Exception.ExceptionsBase;
 
 namespace financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
 public class BuscaDespesaPorIdUseCase : IBuscaDespesaPorIdUseCase
@@ -15,6 +17,10 @@ public class BuscaDespesaPorIdUseCase : IBuscaDespesaPorIdUseCase
     public async Task<ResponseDespesaJson> Execute(long id)
     {
         var resultado = await _repositorio.BuscarPorId(id);
+        if(resultado == null)
+        {
+            throw new NotFoundException(ResourceErrorMessages.DESPESA_NAO_ENCONTRADA);
+        }
 
         return _mapper.Map<ResponseDespesaJson>(resultado);
     }

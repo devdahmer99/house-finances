@@ -70,6 +70,15 @@ namespace financesFlow.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Despesa não encontrada na base de dados..
+        /// </summary>
+        public static string DESPESA_NAO_ENCONTRADA {
+            get {
+                return ResourceManager.GetString("DESPESA_NAO_ENCONTRADA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Metodo de pagamento não encontrado!.
         /// </summary>
         public static string METODO_PAGAMENTO_INEXISTENTE {
