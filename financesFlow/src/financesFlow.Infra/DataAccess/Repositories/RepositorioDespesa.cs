@@ -1,10 +1,9 @@
 ﻿using financesFlow.Dominio.Entidades;
 using financesFlow.Dominio.Repositories.Despesas;
-using financesFlow.Infra.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
-namespace financesFlow.Infra.Repositories;
-internal class RepositorioDespesa : IRepositorioDespesa
+namespace financesFlow.Infra.DataAccess.Repositories;
+internal class RepositorioDespesa : IRepositorioDespesaSomenteLeitura, IRepositorioDepesaSomenteEscrita
 {
     private readonly financesFlowDbContext _db;
     public RepositorioDespesa(financesFlowDbContext dbContext)
@@ -12,7 +11,7 @@ internal class RepositorioDespesa : IRepositorioDespesa
         _db = dbContext;
     }
     public async Task AdicionarDespesa(Despesa despesa)
-    { 
+    {
         await _db.Despesas.AddAsync(despesa);
     }
 

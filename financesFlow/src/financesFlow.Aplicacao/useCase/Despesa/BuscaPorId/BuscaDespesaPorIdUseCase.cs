@@ -7,9 +7,9 @@ using financesFlow.Exception.ExceptionsBase;
 namespace financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
 public class BuscaDespesaPorIdUseCase : IBuscaDespesaPorIdUseCase
 {
-    private readonly IRepositorioDespesa _repositorio;
+    private readonly IRepositorioDespesaSomenteLeitura _repositorio;
     private readonly IMapper _mapper;
-    public BuscaDespesaPorIdUseCase(IRepositorioDespesa repositorio, IMapper mapper)
+    public BuscaDespesaPorIdUseCase(IRepositorioDespesaSomenteLeitura repositorio, IMapper mapper)
     {
         _repositorio = repositorio;
         _mapper = mapper;

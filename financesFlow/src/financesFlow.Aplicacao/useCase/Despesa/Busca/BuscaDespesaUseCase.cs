@@ -6,10 +6,10 @@ namespace financesFlow.Aplicacao.useCase.Despesa.Busca
 {
     public class BuscaDespesaUseCase : IBuscaDespesaUseCase
     {
-        private readonly IRepositorioDespesa _repositorio;
+        private readonly IRepositorioDespesaSomenteLeitura _repositorio;
         private readonly IMapper _mapper;
 
-        public BuscaDespesaUseCase(IRepositorioDespesa repositorio, IMapper mapper)
+        public BuscaDespesaUseCase(IRepositorioDespesaSomenteLeitura repositorio, IMapper mapper)
         {
             _repositorio = repositorio;
             _mapper = mapper;
