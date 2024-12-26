@@ -1,4 +1,5 @@
 ﻿using financesFlow.Aplicacao.AutoMapper;
+using financesFlow.Aplicacao.useCase.Despesa.Atualiza;
 using financesFlow.Aplicacao.useCase.Despesa.Busca;
 using financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
 using financesFlow.Aplicacao.useCase.Despesa.Deleta;
@@ -26,5 +27,6 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<IBuscaDespesaUseCase, BuscaDespesaUseCase>();
         services.AddScoped<IBuscaDespesaPorIdUseCase, BuscaDespesaPorIdUseCase>();
         services.AddScoped<IDeletaDespesaUseCase, DeletaDespesaUseCase>();
+        services.AddScoped<IAtualizaDespesaUseCase, AtualizaDespesaUseCase>();
     }
 }

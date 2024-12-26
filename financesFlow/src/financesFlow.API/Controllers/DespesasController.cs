@@ -1,4 +1,5 @@
-﻿using financesFlow.Aplicacao.useCase.Despesa.Busca;
+﻿using financesFlow.Aplicacao.useCase.Despesa.Atualiza;
+using financesFlow.Aplicacao.useCase.Despesa.Busca;
 using financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
 using financesFlow.Aplicacao.useCase.Despesa.Deleta;
 using financesFlow.Aplicacao.useCase.Despesa.Registrar;
@@ -58,4 +59,14 @@ public class DespesasController : ControllerBase
         return NoContent();
     }
 
+    [HttpPut]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> AtualizaDespesa([FromServices] IAtualizaDespesaUseCase useCase, [FromRoute] long id, [FromBody] RequestDespesaJson request)
+    {
+        await useCase.Execute(id,request);
+        return NoContent();
+    }
 }

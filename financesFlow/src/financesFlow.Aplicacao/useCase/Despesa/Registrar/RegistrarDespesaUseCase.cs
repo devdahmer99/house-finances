@@ -31,7 +31,7 @@ public class RegistrarDespesaUseCase : IRegistrarDespesaUseCase
 
     private void Validate(RequestDespesaJson requestDespesa)
     {
-        var validator = new RegistrarValidacaoDespesa();
+        var validator = new ValidacaoDespesa();
         var result = validator.Validate(requestDespesa);
         if(result.IsValid == false)
         {

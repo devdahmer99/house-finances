@@ -2,10 +2,10 @@
 using financesFlow.Exception;
 using FluentValidation;
 
-namespace financesFlow.Aplicacao.useCase.Despesa.Registrar;
-public class RegistrarValidacaoDespesa : AbstractValidator<RequestDespesaJson>
+namespace financesFlow.Aplicacao.useCase.Despesa;
+public class ValidacaoDespesa : AbstractValidator<RequestDespesaJson>
 {
-    public RegistrarValidacaoDespesa()
+    public ValidacaoDespesa()
     {
         RuleFor(despesa => despesa.NomeDespesa).NotEmpty().WithMessage(ResourceErrorMessages.NOME_VAZIO);
         RuleFor(despesa => despesa.ValorDespesa).GreaterThan(0).WithMessage(ResourceErrorMessages.VALOR_DESPESA);

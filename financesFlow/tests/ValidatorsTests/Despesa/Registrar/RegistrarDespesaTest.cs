@@ -1,5 +1,4 @@
 ﻿using CommonTestsUtilitis.Requests;
-using financesFlow.Aplicacao.useCase.Despesa.Registrar;
 using financesFlow.Comunicacao.Enums;
 using financesFlow.Exception;
 using FluentAssertions;
@@ -10,7 +9,7 @@ public class RegistrarDespesaTest
     [Fact]
     public void Success()
     {
-        var validator = new RegistrarValidacaoDespesa();
+        var validator = new financesFlow.Aplicacao.useCase.Despesa.ValidacaoDespesa();
 
         var request = RequestDespesaJsonBuilder.Build();
 
@@ -22,7 +21,7 @@ public class RegistrarDespesaTest
     [Fact]
     public void Error_Nome_Vazio()
     {
-        var validator = new RegistrarValidacaoDespesa();
+        var validator = new financesFlow.Aplicacao.useCase.Despesa.ValidacaoDespesa();
         var request = RequestDespesaJsonBuilder.Build();
         request.NomeDespesa = string.Empty;
 
@@ -35,7 +34,7 @@ public class RegistrarDespesaTest
     [Fact]
     public void Data_Incorreta()
     {
-        var validator = new RegistrarValidacaoDespesa();
+        var validator = new financesFlow.Aplicacao.useCase.Despesa.ValidacaoDespesa();
         var request = RequestDespesaJsonBuilder.Build();
         request.DataDespesa = DateTime.UtcNow.AddDays(1);
 
@@ -48,7 +47,7 @@ public class RegistrarDespesaTest
     [Fact]
     public void Metodo_Pagamento_Invalido()
     {
-        var validator = new RegistrarValidacaoDespesa();
+        var validator = new financesFlow.Aplicacao.useCase.Despesa.ValidacaoDespesa();
         var request = RequestDespesaJsonBuilder.Build();
         request.FormaDePagamento = (MetodoPagamento)700;
 
@@ -63,7 +62,7 @@ public class RegistrarDespesaTest
     [InlineData(-1)]
     public void Error_Valor_Incorreto(decimal valorPagamento)
     {
-        var validator = new RegistrarValidacaoDespesa();
+        var validator = new financesFlow.Aplicacao.useCase.Despesa.ValidacaoDespesa();
         var request = RequestDespesaJsonBuilder.Build();
         request.ValorDespesa = valorPagamento;
 

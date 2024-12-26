@@ -20,6 +20,7 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<IUnidadeDeTrabalho, UnidadeDeTrabalho>();
         services.AddScoped<IRepositorioDespesaSomenteLeitura, RepositorioDespesa>();
         services.AddScoped<IRepositorioDepesaSomenteEscrita, RepositorioDespesa>();
+        services.AddScoped<IRepositorioDespesaSomenteAtualizacao, RepositorioDespesa>();
     }
 
     private static void AdicionarDbContext(IServiceCollection services, IConfiguration configuration)
