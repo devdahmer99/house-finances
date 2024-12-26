@@ -1,5 +1,6 @@
 ﻿using financesFlow.Aplicacao.useCase.Despesa.Busca;
 using financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
+using financesFlow.Aplicacao.useCase.Despesa.Deleta;
 using financesFlow.Aplicacao.useCase.Despesa.Registrar;
 using financesFlow.Comunicacao.Requests;
 using financesFlow.Comunicacao.Responses;
@@ -46,4 +47,15 @@ public class DespesasController : ControllerBase
 
         return Ok(resultado);
     }
+
+    [HttpDelete]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeletarDespesa([FromServices] IDeletaDespesaUseCase useCase, [FromRoute] long id)
+    {
+        await useCase.Execute(id);
+        return NoContent();
+    }
+
 }

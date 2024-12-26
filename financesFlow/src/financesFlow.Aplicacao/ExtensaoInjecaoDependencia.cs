@@ -1,6 +1,7 @@
 ﻿using financesFlow.Aplicacao.AutoMapper;
 using financesFlow.Aplicacao.useCase.Despesa.Busca;
 using financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
+using financesFlow.Aplicacao.useCase.Despesa.Deleta;
 using financesFlow.Aplicacao.useCase.Despesa.Registrar;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,5 +25,6 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<IRegistrarDespesaUseCase, RegistrarDespesaUseCase>();
         services.AddScoped<IBuscaDespesaUseCase, BuscaDespesaUseCase>();
         services.AddScoped<IBuscaDespesaPorIdUseCase, BuscaDespesaPorIdUseCase>();
+        services.AddScoped<IDeletaDespesaUseCase, DeletaDespesaUseCase>();
     }
 }

@@ -24,4 +24,17 @@ internal class RepositorioDespesa : IRepositorioDespesaSomenteLeitura, IReposito
     {
         return await _db.Despesas.AsNoTracking().ToListAsync();
     }
+
+    public async Task<bool> DeletaDespesa(long id)
+    {
+        var result = await _db.Despesas.FirstOrDefaultAsync(des => des.Id == id);
+        if(result == null)
+        {
+            return false;
+        }
+
+        _db.Despesas.Remove(result);
+
+        return true;
+    }
 }
