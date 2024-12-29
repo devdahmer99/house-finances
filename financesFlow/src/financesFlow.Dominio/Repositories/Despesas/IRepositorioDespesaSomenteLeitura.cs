@@ -5,4 +5,5 @@ public interface IRepositorioDespesaSomenteLeitura
 {
     Task<List<Despesa>> BuscarTudo();
     Task<Despesa?> BuscarPorId(long id);
+    Task<List<Despesa>> FiltraPorMes(DateOnly data);
 }

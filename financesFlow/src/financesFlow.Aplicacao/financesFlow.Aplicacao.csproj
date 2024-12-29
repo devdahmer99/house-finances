@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="ClosedXML" Version="0.104.2" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
   </ItemGroup>
 
@@ -15,6 +16,21 @@
     <ProjectReference Include="..\financesFlow.Comunicacao\financesFlow.Comunicacao.csproj" />
     <ProjectReference Include="..\financesFlow.Dominio\financesFlow.Dominio.csproj" />
     <ProjectReference Include="..\financesFlow.Exception\financesFlow.Exception.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Reports\ResourceReportGeneratioNMessages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ResourceReportGenerationMessages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Reports\ResourceReportGenerationMessages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceReportGeneratioNMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

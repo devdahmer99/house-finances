@@ -13,7 +13,7 @@ namespace financesFlow.API.Controllers;
 public class DespesasController : ControllerBase
 {
 
-    [HttpPost]
+    [HttpPost("RegistraDespesa")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> RegistrarDespesa([FromServices]IRegistrarDespesaUseCase useCase, [FromBody] RequestDespesaJson requestDespesa)
     {
@@ -22,7 +22,7 @@ public class DespesasController : ControllerBase
       return Created(string.Empty, response);    
     }
 
-    [HttpGet]
+    [HttpGet("BuscaDespesasCadastradas")]
     [ProducesResponseType(typeof(ResponseDespesasJson), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> BuscaTodasDespesas([FromServices] IBuscaDespesaUseCase useCase)
@@ -38,19 +38,17 @@ public class DespesasController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{id}")]
+    [Route("BuscaDespesaCadastrada/{id}")]
     [ProducesResponseType(typeof(ResponseDespesaJson), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> BuscaDespesaPorId([FromRoute] long id, [FromServices] IBuscaDespesaPorIdUseCase useCase)
     {
-        
         var resultado = await useCase.Execute(id);
-
         return Ok(resultado);
     }
 
     [HttpDelete]
-    [Route("{id}")]
+    [Route("DeletaDespesa/{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeletarDespesa([FromServices] IDeletaDespesaUseCase useCase, [FromRoute] long id)
@@ -60,7 +58,7 @@ public class DespesasController : ControllerBase
     }
 
     [HttpPut]
-    [Route("{id}")]
+    [Route("AtualizaDespesa/{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
