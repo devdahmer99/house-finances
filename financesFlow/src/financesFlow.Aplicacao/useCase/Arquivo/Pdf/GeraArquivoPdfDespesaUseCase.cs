@@ -1,7 +1,9 @@
 ﻿using financesFlow.Aplicacao.Reports;
+using financesFlow.Aplicacao.useCase.Arquivo.Pdf.Colors;
 using financesFlow.Aplicacao.useCase.Arquivo.Pdf.Fonts;
 using financesFlow.Dominio.Repositories.Despesas;
 using MigraDoc.DocumentObjectModel;
+using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using PdfSharp.Fonts;
 using System.Reflection;
@@ -30,8 +32,31 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
         var pagina = CriaPaginaDoPdf(documento);
 
         CriaCabecalhoComFoto(pagina);
+
         var totalDespesas = despesas.Sum(desp => desp.ValorDespesa);
         CriaParagrafo(pagina, mes, totalDespesas);
+
+        foreach(var despesa in despesas)
+        {
+            var table = CriaTabelaDespesas(pagina);
+            var linha = table.AddRow();
+            linha.Height = 25;
+            linha.Cells[0].AddParagraph(despesa.NomeDespesa);
+            linha.Cells[0].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelpers.BLACK};
+            linha.Cells[0].Shading.Color = ColorsHelpers.RED_LIGHT;
+            linha.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+            linha.Cells[0].MergeRight = 2;
+            linha.Cells[0].Format.LeftIndent = 20;
+
+            linha.Cells[3].AddParagraph(ResourceReportGenerationMessages.VALOR);
+            linha.Cells[3].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelpers.WHITE };
+            linha.Cells[3].Shading.Color = ColorsHelpers.RED_DARK;
+            linha.Cells[3].VerticalAlignment = VerticalAlignment.Center;
+
+            linha = table.AddRow();
+            linha.Height = 30;
+            linha.Borders.Visible = false;
+        }
 
         return RenderizaPDF(documento);
     }
@@ -89,7 +114,7 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
         linha.Cells[0].AddImage(caminhoImagem);
         linha.Cells[1].AddParagraph("Olá, Eduardo Dahmer");
         linha.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
-        linha.Cells[1].VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
+        linha.Cells[1].VerticalAlignment = VerticalAlignment.Center;
     }
 
     private void CriaParagrafo(Section pagina, DateOnly mes, decimal totalDespesas)
@@ -104,5 +129,16 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
 
         
         paragrafo.AddFormattedText($"{CURRENCY_SYMBOL} {totalDespesas}", new Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
+    }
+
+    private Table CriaTabelaDespesas(Section pagina)
+    {
+        var table = pagina.AddTable();
+        table.AddColumn("195").Format.Alignment = ParagraphAlignment.Left;
+        table.AddColumn("80").Format.Alignment = ParagraphAlignment.Center;
+        table.AddColumn("120").Format.Alignment = ParagraphAlignment.Center;
+        table.AddColumn("120").Format.Alignment = ParagraphAlignment.Right;
+
+        return table;
     }
 }
