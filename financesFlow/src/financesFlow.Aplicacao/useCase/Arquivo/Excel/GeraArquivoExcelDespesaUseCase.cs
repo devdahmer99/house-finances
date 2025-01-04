@@ -4,12 +4,12 @@ using financesFlow.Aplicacao.Reports;
 using financesFlow.Dominio.Enums;
 using financesFlow.Dominio.Repositories.Despesas;
 
-namespace financesFlow.Aplicacao.useCase.Arquivo;
-public class GeraArquivoDespesaUseCase : IGeraArquivoDespesaUseCase
+namespace financesFlow.Aplicacao.useCase.Arquivo.Excel;
+public class GeraArquivoExcelDespesaUseCase : IGeraArquivoExcelDespesaUseCase
 {
     private const string CURRENCY_SYMBOL = "R$";
     private readonly IRepositorioDespesaSomenteLeitura _repositorio;
-    public GeraArquivoDespesaUseCase(IRepositorioDespesaSomenteLeitura repositorio)
+    public GeraArquivoExcelDespesaUseCase(IRepositorioDespesaSomenteLeitura repositorio)
     {
         _repositorio = repositorio;
     }
@@ -18,7 +18,7 @@ public class GeraArquivoDespesaUseCase : IGeraArquivoDespesaUseCase
     {
         var despesas = await _repositorio.FiltraPorMes(mes);
 
-        if(despesas.Count == 0)
+        if (despesas.Count == 0)
         {
             return [];
         }
@@ -31,7 +31,7 @@ public class GeraArquivoDespesaUseCase : IGeraArquivoDespesaUseCase
         InserirCabecalho(planilha);
         var linha = 2;
 
-        foreach(var despesa in despesas )
+        foreach (var despesa in despesas)
         {
             planilha.Cell($"A{linha}").Value = despesa.NomeDespesa;
             planilha.Cell($"B{linha}").Value = despesa.DataDespesa;
@@ -51,7 +51,8 @@ public class GeraArquivoDespesaUseCase : IGeraArquivoDespesaUseCase
 
     private string ConverteMetodoPagamento(MetodoPagamento pagamento)
     {
-        return pagamento switch {
+        return pagamento switch
+        {
             MetodoPagamento.Pix => "Pix",
             MetodoPagamento.Cartão => "Cartão",
             MetodoPagamento.Boleto => "Boleto",

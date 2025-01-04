@@ -32,7 +32,7 @@ internal class RepositorioDespesa : IRepositorioDespesaSomenteLeitura, IReposito
 
     public async Task<List<Despesa>> BuscarTudo()
     {
-        return await _db.Despesas.AsNoTracking().ToListAsync();
+        return await _db.Despesas.AsNoTracking().OrderBy(des => des.DataDespesa).ThenBy(des => des.Id).Take(10).ToListAsync();
     }
 
     public async Task<bool> DeletaDespesa(long id)
@@ -60,5 +60,11 @@ internal class RepositorioDespesa : IRepositorioDespesaSomenteLeitura, IReposito
         var DataFinal = new DateTime(year: data.Year, month: data.Month, day: DiasDoMes, hour: 23, minute: 59, second: 59);
 
         return await _db.Despesas.AsNoTracking().Where(desp => desp.DataDespesa >= DataInicial && desp.DataDespesa <= DataFinal ).OrderBy(desp => desp.DataDespesa).ToListAsync();
+    }
+
+    public async Task<decimal> BuscaTotalDespesas()
+    {
+        decimal totalDespesas = await _db.Despesas.SumAsync(des => des.ValorDespesa);
+        return totalDespesas;
     }
 }

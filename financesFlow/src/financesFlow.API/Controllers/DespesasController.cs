@@ -1,6 +1,7 @@
 ﻿using financesFlow.Aplicacao.useCase.Despesa.Atualiza;
 using financesFlow.Aplicacao.useCase.Despesa.Busca;
 using financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
+using financesFlow.Aplicacao.useCase.Despesa.BuscaTotal;
 using financesFlow.Aplicacao.useCase.Despesa.Deleta;
 using financesFlow.Aplicacao.useCase.Despesa.Registrar;
 using financesFlow.Comunicacao.Requests;
@@ -65,6 +66,20 @@ public class DespesasController : ControllerBase
     public async Task<IActionResult> AtualizaDespesa([FromServices] IAtualizaDespesaUseCase useCase, [FromRoute] long id, [FromBody] RequestDespesaJson request)
     {
         await useCase.Execute(id,request);
+        return NoContent();
+    }
+
+    [HttpGet("BuscaTotalDespesas")]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> BuscaTotalDespesas([FromServices] IBuscaTotalDespesasUseCase useCase)
+    {
+        var resultado = await useCase.Execute();
+        if(!resultado.Equals(0))
+        {
+            return Ok(resultado);
+        }
+
         return NoContent();
     }
 }

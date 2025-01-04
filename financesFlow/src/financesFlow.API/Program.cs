@@ -17,6 +17,16 @@ builder.Services.Configure<RouteOptions>(options =>
 
 builder.Services.AdicionarInfra(builder.Configuration);
 builder.Services.AdicionarAplicacao();
+builder.Services.AddCors(options => 
+     options.AddPolicy("AllowSpecificOrigins", policy =>
+     {
+         policy.WithOrigins("https://localhost:3000/", "http://localhost:3000/")
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials()
+               .WithExposedHeaders("Content-Disposition")
+               .SetIsOriginAllowed(_ => true);
+     }));
 
 var app = builder.Build();
 
@@ -30,6 +40,8 @@ app.UseMiddleware<CultureMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("AllowSpecificOrigins");
 
 app.MapControllers();
 

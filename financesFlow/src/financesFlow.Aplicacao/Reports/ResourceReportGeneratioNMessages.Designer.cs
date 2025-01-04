@@ -97,6 +97,15 @@ namespace financesFlow.Aplicacao.Reports {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a total gasto em {0}.
+        /// </summary>
+        public static string TOTAL_GASTO_EM {
+            get {
+                return ResourceManager.GetString("TOTAL_GASTO_EM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a ValorDespesa.
         /// </summary>
         public static string VALOR {

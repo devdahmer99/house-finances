@@ -129,6 +129,9 @@
   <data name="TITULO" xml:space="preserve">
     <value>TITULO</value>
   </data>
+  <data name="TOTAL_GASTO_EM" xml:space="preserve">
+    <value>total gasto em {0}</value>
+  </data>
   <data name="VALOR" xml:space="preserve">
     <value>ValorDespesa</value>
   </data>
