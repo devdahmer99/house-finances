@@ -2,6 +2,8 @@ using financesFlow.API.Filtros;
 using financesFlow.API.Middleware;
 using financesFlow.Aplicacao;
 using financesFlow.Infra;
+using financesFlow.Infra.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,10 @@ builder.Services.AddCors(options =>
                .WithExposedHeaders("Content-Disposition")
                .SetIsOriginAllowed(_ => true);
      }));
+builder.Services.AddDbContext<financesFlowDbContext>(options =>
+                options.UseMySql(
+                        builder.Configuration.GetConnectionString("Connection"), new MySqlServerVersion(new Version(9,1,0)))
+                );
 
 var app = builder.Build();
 
