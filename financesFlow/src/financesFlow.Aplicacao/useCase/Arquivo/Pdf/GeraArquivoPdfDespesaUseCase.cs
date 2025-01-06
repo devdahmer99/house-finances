@@ -41,16 +41,36 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
             var table = CriaTabelaDespesas(pagina);
             var linha = table.AddRow();
             linha.Height = 25;
+
             linha.Cells[0].AddParagraph(despesa.NomeDespesa);
-            linha.Cells[0].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelpers.BLACK};
-            linha.Cells[0].Shading.Color = ColorsHelpers.RED_LIGHT;
+            linha.Cells[0].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorHelpers.BLACK};
+            linha.Cells[0].Shading.Color = ColorHelpers.RED_LIGHT;
             linha.Cells[0].VerticalAlignment = VerticalAlignment.Center;
             linha.Cells[0].MergeRight = 2;
             linha.Cells[0].Format.LeftIndent = 20;
 
             linha.Cells[3].AddParagraph(ResourceReportGenerationMessages.VALOR);
-            linha.Cells[3].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelpers.WHITE };
-            linha.Cells[3].Shading.Color = ColorsHelpers.RED_DARK;
+            linha.Cells[3].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorHelpers.WHITE };
+            linha.Cells[3].Shading.Color = ColorHelpers.RED_DARK;
+            linha.Cells[3].VerticalAlignment = VerticalAlignment.Center;
+
+            linha = table.AddRow();
+            linha.Height = 25;
+
+            linha.Cells[0].AddParagraph(despesa.DataDespesa.ToString("D"));
+            linha.Cells[0].Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 12, Color = ColorHelpers.BLACK };
+            linha.Cells[0].Shading.Color = ColorHelpers.GREEN_DARK;
+            linha.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+            linha.Cells[0].Format.LeftIndent = 20;
+
+            linha.Cells[1].AddParagraph(despesa.DataDespesa.ToString("t"));
+            linha.Cells[1].Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 12, Color = ColorHelpers.BLACK };
+            linha.Cells[1].Shading.Color = ColorHelpers.GREEN_DARK;
+            linha.Cells[1].VerticalAlignment = VerticalAlignment.Center;
+
+            linha.Cells[3].AddParagraph($"{CURRENCY_SYMBOL} {despesa.ValorDespesa}");
+            linha.Cells[3].Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 14, Color = ColorHelpers.BLACK };
+            linha.Cells[3].Shading.Color = ColorHelpers.WHITE;
             linha.Cells[3].VerticalAlignment = VerticalAlignment.Center;
 
             linha = table.AddRow();
