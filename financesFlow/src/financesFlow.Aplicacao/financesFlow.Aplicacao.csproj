@@ -35,16 +35,16 @@
 
   <ItemGroup>
     <Compile Update="Reports\ResourceReportGeneratioNMessages.Designer.cs">
+      <DependentUpon>ResourceReportGenerationMessages.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ResourceReportGenerationMessages.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Reports\ResourceReportGenerationMessages.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceReportGeneratioNMessages.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

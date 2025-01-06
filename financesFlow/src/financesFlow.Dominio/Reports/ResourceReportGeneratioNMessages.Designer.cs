@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace financesFlow.Aplicacao.Reports {
+namespace financesFlow.Dominio.Reports {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace financesFlow.Aplicacao.Reports {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("financesFlow.Aplicacao.Reports.ResourceReportGenerationMessages", typeof(ResourceReportGenerationMessages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("financesFlow.Dominio.Reports.ResourceReportGenerationMessages", typeof(ResourceReportGenerationMessages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

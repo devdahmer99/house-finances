@@ -1,17 +1,21 @@
-﻿using financesFlow.Aplicacao.Reports;
-using financesFlow.Aplicacao.useCase.Arquivo.Pdf.Colors;
+﻿using financesFlow.Aplicacao.useCase.Arquivo.Pdf.Colors;
 using financesFlow.Aplicacao.useCase.Arquivo.Pdf.Fonts;
+using financesFlow.Dominio.Extensões;
+using financesFlow.Dominio.Reports;
 using financesFlow.Dominio.Repositories.Despesas;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using PdfSharp.Fonts;
 using System.Reflection;
+using Cell = MigraDoc.DocumentObjectModel.Tables.Cell;
+using Table = MigraDoc.DocumentObjectModel.Tables.Table;
 
 namespace financesFlow.Aplicacao.useCase.Arquivo.Pdf;
 public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
 {
     private const string CURRENCY_SYMBOL = "R$";
+    private const int HEIGHT_TABELA_DESPESAS = 25;
     private readonly IRepositorioDespesaSomenteLeitura _repositorio;
 
     public GeraArquivoPdfDespesaUseCase(IRepositorioDespesaSomenteLeitura repositorio)
@@ -40,42 +44,48 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
         {
             var table = CriaTabelaDespesas(pagina);
             var linha = table.AddRow();
-            linha.Height = 25;
+            linha.Height = HEIGHT_TABELA_DESPESAS;
 
             linha.Cells[0].AddParagraph(despesa.NomeDespesa);
-            linha.Cells[0].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorHelpers.BLACK};
+            linha.Cells[0].Format.Font = new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorHelpers.BLACK};
             linha.Cells[0].Shading.Color = ColorHelpers.RED_LIGHT;
             linha.Cells[0].VerticalAlignment = VerticalAlignment.Center;
             linha.Cells[0].MergeRight = 2;
             linha.Cells[0].Format.LeftIndent = 20;
+            linha.Height = HEIGHT_TABELA_DESPESAS;
 
             linha.Cells[3].AddParagraph(ResourceReportGenerationMessages.VALOR);
-            linha.Cells[3].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorHelpers.WHITE };
-            linha.Cells[3].Shading.Color = ColorHelpers.RED_DARK;
-            linha.Cells[3].VerticalAlignment = VerticalAlignment.Center;
+            SetaEstiloBaseParaInformacaoDespesa(linha.Cells[3]);
 
             linha = table.AddRow();
-            linha.Height = 25;
+            linha.Height = HEIGHT_TABELA_DESPESAS;
 
             linha.Cells[0].AddParagraph(despesa.DataDespesa.ToString("D"));
-            linha.Cells[0].Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 12, Color = ColorHelpers.BLACK };
-            linha.Cells[0].Shading.Color = ColorHelpers.GREEN_DARK;
-            linha.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+            SetaEstiloBaseParaInformacaoDespesa(linha.Cells[0]);
             linha.Cells[0].Format.LeftIndent = 20;
 
             linha.Cells[1].AddParagraph(despesa.DataDespesa.ToString("t"));
-            linha.Cells[1].Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 12, Color = ColorHelpers.BLACK };
-            linha.Cells[1].Shading.Color = ColorHelpers.GREEN_DARK;
-            linha.Cells[1].VerticalAlignment = VerticalAlignment.Center;
+            SetaEstiloBaseParaInformacaoDespesa(linha.Cells[1]);
 
-            linha.Cells[3].AddParagraph($"{CURRENCY_SYMBOL} {despesa.ValorDespesa}");
-            linha.Cells[3].Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 14, Color = ColorHelpers.BLACK };
-            linha.Cells[3].Shading.Color = ColorHelpers.WHITE;
-            linha.Cells[3].VerticalAlignment = VerticalAlignment.Center;
+            linha.Cells[2].AddParagraph(despesa.MetodoPagamento.TipoMetodoPagamentoToString());
+            SetaEstiloBaseParaInformacaoDespesa(linha.Cells[2]);
 
-            linha = table.AddRow();
-            linha.Height = 30;
-            linha.Borders.Visible = false;
+            AdicionaValorParaDespesa(linha.Cells[3], despesa.ValorDespesa);
+
+            if (string.IsNullOrWhiteSpace(despesa.Descricao) == false)
+            {
+                var linhaDescricao = table.AddRow();
+                linhaDescricao.Height = HEIGHT_TABELA_DESPESAS;
+                linhaDescricao.Cells[0].AddParagraph(despesa.Descricao);
+                linhaDescricao.Cells[0].Format.Font = new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.WORKSANS_REGULAR, Size = 10, Color = ColorHelpers.BLACK };
+                linhaDescricao.Cells[0].Shading.Color = ColorHelpers.GREEN_LIGHT;
+                linhaDescricao.Cells[0].MergeRight = 2;
+                linhaDescricao.Cells[0].Format.LeftIndent = 20;
+
+                linha.Cells[3].MergeDown = 1;
+                
+            }
+            AdicionaEspacoEmBranco(table);
         }
 
         return RenderizaPDF(documento);
@@ -133,7 +143,7 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
 
         linha.Cells[0].AddImage(caminhoImagem);
         linha.Cells[1].AddParagraph("Olá, Eduardo Dahmer");
-        linha.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
+        linha.Cells[1].Format.Font = new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
         linha.Cells[1].VerticalAlignment = VerticalAlignment.Center;
     }
 
@@ -144,11 +154,11 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
         paragrafo.Format.SpaceAfter = "40";
         var titulo = string.Format(ResourceReportGenerationMessages.TOTAL_GASTO_EM, mes.ToString("Y"));
 
-        paragrafo.AddFormattedText(titulo, new Font { Name = FontHelper.RALEWAY_REGULAR, Size = 15 });
+        paragrafo.AddFormattedText(titulo, new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.RALEWAY_REGULAR, Size = 15 });
         paragrafo.AddLineBreak();
 
         
-        paragrafo.AddFormattedText($"{CURRENCY_SYMBOL} {totalDespesas}", new Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
+        paragrafo.AddFormattedText($"{CURRENCY_SYMBOL} {totalDespesas}", new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
     }
 
     private Table CriaTabelaDespesas(Section pagina)
@@ -160,5 +170,27 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
         table.AddColumn("120").Format.Alignment = ParagraphAlignment.Right;
 
         return table;
+    }
+
+    private void SetaEstiloBaseParaInformacaoDespesa(Cell celula)
+    {
+        celula.Format.Font = new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.WORKSANS_REGULAR, Size = 12, Color = ColorHelpers.BLACK };
+        celula.Shading.Color = ColorHelpers.GREEN_DARK;
+        celula.VerticalAlignment = VerticalAlignment.Center;
+    }
+
+    private void AdicionaValorParaDespesa(Cell cell, decimal valor)
+    {
+        cell.AddParagraph($"{CURRENCY_SYMBOL} {valor}");
+        cell.Format.Font = new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.WORKSANS_REGULAR, Size = 14, Color = ColorHelpers.BLACK };
+        cell.Shading.Color = ColorHelpers.WHITE;
+        cell.VerticalAlignment = VerticalAlignment.Center;
+    }
+
+    private void AdicionaEspacoEmBranco(Table tabela)
+    {
+        var linha = tabela.AddRow();
+        linha.Height = 30;
+        linha.Borders.Visible = false;
     }
 }
