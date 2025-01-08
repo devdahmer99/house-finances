@@ -3,6 +3,7 @@ using financesFlow.API.Middleware;
 using financesFlow.Aplicacao;
 using financesFlow.Infra;
 using financesFlow.Infra.DataAccess;
+using financesFlow.Infra.Migrations;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,10 +30,6 @@ builder.Services.AddCors(options =>
                .WithExposedHeaders("Content-Disposition")
                .SetIsOriginAllowed(_ => true);
      }));
-builder.Services.AddDbContext<financesFlowDbContext>(options =>
-                options.UseMySql(
-                        builder.Configuration.GetConnectionString("Connection"), new MySqlServerVersion(new Version(9,1,0)))
-                );
 
 var app = builder.Build();
 
@@ -51,4 +48,13 @@ app.UseCors("AllowSpecificOrigins");
 
 app.MapControllers();
 
+await MigrateDatabase();
+
 app.Run();
+
+async Task MigrateDatabase()
+{
+    await using var scope = app.Services.CreateAsyncScope();
+
+    await DatabaseMigration.MigrateDatabase(scope.ServiceProvider);
+}
