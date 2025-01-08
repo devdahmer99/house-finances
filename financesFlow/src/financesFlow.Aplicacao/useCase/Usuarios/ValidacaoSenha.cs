@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using DocumentFormat.OpenXml.Office.PowerPoint.Y2021.M06.Main;
 using financesFlow.Exception;
 using FluentValidation;
 using FluentValidation.Validators;

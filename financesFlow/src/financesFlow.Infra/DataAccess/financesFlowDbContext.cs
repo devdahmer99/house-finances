@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace financesFlow.Infra.DataAccess;
-internal class financesFlowDbContext : DbContext
+public class financesFlowDbContext : DbContext
 {
     public financesFlowDbContext(DbContextOptions<financesFlowDbContext>options) : base (options){}
 

@@ -115,6 +115,15 @@ namespace financesFlow.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O e-mail digitado já esta registrado em base, por favor, digite um e-mail diferente.
+        /// </summary>
+        public static string USUARIO_COM_EMAIL_JA_EXISTENTE {
+            get {
+                return ResourceManager.GetString("USUARIO_COM_EMAIL_JA_EXISTENTE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O e-mail precisa ser preenchido.
         /// </summary>
         public static string USUARIO_COM_EMAIL_VAZIO {

@@ -18,7 +18,8 @@ public class AutoMapping : Profile
     public void BuscaEntidade()
     {
         CreateMap<RequestDespesaJson, Despesa>();
-        CreateMap<RequestCriaUsuarioJson, Usuario>();
+        CreateMap<RequestCriaUsuarioJson, Usuario>()
+            .ForMember(dest => dest.Senha, conf => conf.Ignore());
     }
 
 

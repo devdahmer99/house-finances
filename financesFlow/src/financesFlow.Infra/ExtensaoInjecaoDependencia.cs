@@ -1,7 +1,10 @@
 ﻿using financesFlow.Dominio.Repositories;
 using financesFlow.Dominio.Repositories.Despesas;
+using financesFlow.Dominio.Repositories.Usuarios;
+using financesFlow.Dominio.Seguranca.Criptografia;
 using financesFlow.Infra.DataAccess;
 using financesFlow.Infra.DataAccess.Repositories.Despesa;
+using financesFlow.Infra.DataAccess.Repositories.Usuario;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +16,7 @@ public static class ExtensaoInjecaoDependencia
     {
         AdicionarDbContext(services, configuration);
         AdicionarRepositorios(services);
+        services.AddScoped<IEncriptadorSenha, Infra.Seguranca.BCrypt>();
     }
 
     private static void AdicionarRepositorios(IServiceCollection services)
@@ -21,6 +25,8 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<IRepositorioDespesaSomenteLeitura, RepositorioDespesa>();
         services.AddScoped<IRepositorioDepesaSomenteEscrita, RepositorioDespesa>();
         services.AddScoped<IRepositorioDespesaSomenteAtualizacao, RepositorioDespesa>();
+        services.AddScoped<IRepositorioUsuarioSomenteEscrita, RepositorioUsuario>();
+        services.AddScoped<IRepositorioUsuarioSomenteLeitura, RepositorioUsuario>();
     }
 
     private static void AdicionarDbContext(IServiceCollection services, IConfiguration configuration)
