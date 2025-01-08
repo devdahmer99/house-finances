@@ -1,4 +1,4 @@
-﻿using financesFlow.Comunicacao.Responses;
+﻿using financesFlow.Comunicacao.Responses.Despesa;
 
 namespace financesFlow.Aplicacao.useCase.Despesa.Busca
 {

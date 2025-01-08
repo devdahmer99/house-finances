@@ -7,6 +7,7 @@ using financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
 using financesFlow.Aplicacao.useCase.Despesa.BuscaTotal;
 using financesFlow.Aplicacao.useCase.Despesa.Deleta;
 using financesFlow.Aplicacao.useCase.Despesa.Registrar;
+using financesFlow.Aplicacao.useCase.Usuarios.Criar;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace financesFlow.Aplicacao;
@@ -34,5 +35,6 @@ public static class ExtensaoInjecaoDependencia
         services.AddScoped<IGeraArquivoExcelDespesaUseCase, GeraArquivoExcelDespesaUseCase>();
         services.AddScoped<IGeraArquivoPdfDespesaUseCase, GeraArquivoPdfDespesaUseCase>();
         services.AddScoped<IBuscaTotalDespesasUseCase, BuscaTotalDespesasUseCase>();
+        services.AddScoped<ICriarUsuarioUseCase, CriaUsuarioUseCase>();
     }
 }

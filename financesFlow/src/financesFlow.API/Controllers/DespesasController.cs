@@ -4,8 +4,9 @@ using financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
 using financesFlow.Aplicacao.useCase.Despesa.BuscaTotal;
 using financesFlow.Aplicacao.useCase.Despesa.Deleta;
 using financesFlow.Aplicacao.useCase.Despesa.Registrar;
-using financesFlow.Comunicacao.Requests;
+using financesFlow.Comunicacao.Requests.Despesa;
 using financesFlow.Comunicacao.Responses;
+using financesFlow.Comunicacao.Responses.Despesa;
 using Microsoft.AspNetCore.Mvc;
 
 namespace financesFlow.API.Controllers;

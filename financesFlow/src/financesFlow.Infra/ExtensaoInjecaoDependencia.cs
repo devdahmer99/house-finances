@@ -1,7 +1,7 @@
 ﻿using financesFlow.Dominio.Repositories;
 using financesFlow.Dominio.Repositories.Despesas;
 using financesFlow.Infra.DataAccess;
-using financesFlow.Infra.DataAccess.Repositories;
+using financesFlow.Infra.DataAccess.Repositories.Despesa;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

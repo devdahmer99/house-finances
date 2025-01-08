@@ -106,6 +106,51 @@ namespace financesFlow.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O e-mail digitado é inválido.
+        /// </summary>
+        public static string USUARIO_COM_EMAIL_INVALIDO {
+            get {
+                return ResourceManager.GetString("USUARIO_COM_EMAIL_INVALIDO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O e-mail precisa ser preenchido.
+        /// </summary>
+        public static string USUARIO_COM_EMAIL_VAZIO {
+            get {
+                return ResourceManager.GetString("USUARIO_COM_EMAIL_VAZIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O nome precisa ser preenchido.
+        /// </summary>
+        public static string USUARIO_COM_NOME_VAZIO {
+            get {
+                return ResourceManager.GetString("USUARIO_COM_NOME_VAZIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A senha precisa ser prenchida corretamente.
+        /// </summary>
+        public static string USUARIO_COM_SENHA_EM_BRANCO {
+            get {
+                return ResourceManager.GetString("USUARIO_COM_SENHA_EM_BRANCO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A sua senha recisa conter no minímo 8 caracteres, contendo pelo menos uma letra maiúscula uma letra minúscula, um número e um caractere especial (! ? * #)..
+        /// </summary>
+        public static string USUARIO_COM_SENHA_INVALIDA {
+            get {
+                return ResourceManager.GetString("USUARIO_COM_SENHA_INVALIDA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O valor não pode ser igual a zero.
         /// </summary>
         public static string VALOR_DESPESA {

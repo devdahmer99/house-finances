@@ -1,6 +1,6 @@
 ﻿using financesFlow.Comunicacao.Enums;
 
-namespace financesFlow.Comunicacao.Responses;
+namespace financesFlow.Comunicacao.Responses.Despesa;
 public class ResponseShortDepesaJson
 {
     public long Id { get; set; }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
-using financesFlow.Comunicacao.Requests;
-using financesFlow.Comunicacao.Responses;
+using financesFlow.Comunicacao.Requests.Despesa;
+using financesFlow.Comunicacao.Requests.Usuario;
+using financesFlow.Comunicacao.Responses.Despesa;
+using financesFlow.Comunicacao.Responses.Usuario;
 using financesFlow.Dominio.Entidades;
 
 namespace financesFlow.Aplicacao.AutoMapper;
@@ -16,6 +18,7 @@ public class AutoMapping : Profile
     public void BuscaEntidade()
     {
         CreateMap<RequestDespesaJson, Despesa>();
+        CreateMap<RequestCriaUsuarioJson, Usuario>();
     }
 
 
@@ -23,5 +26,6 @@ public class AutoMapping : Profile
     {
         CreateMap<Despesa, ResponseDespesaJson>();
         CreateMap<Despesa, ResponseShortDepesaJson>();
+        CreateMap<Usuario, ResponseCriaUsuarioJson>();
     }
 }

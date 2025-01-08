@@ -135,4 +135,19 @@
   <data name="VALOR_DESPESA" xml:space="preserve">
     <value>O valor não pode ser igual a zero</value>
   </data>
+  <data name="USUARIO_COM_NOME_VAZIO" xml:space="preserve">
+    <value>O nome precisa ser preenchido</value>
+  </data>
+  <data name="USUARIO_COM_EMAIL_VAZIO" xml:space="preserve">
+    <value>O e-mail precisa ser preenchido</value>
+  </data>
+  <data name="USUARIO_COM_SENHA_EM_BRANCO" xml:space="preserve">
+    <value>A senha precisa ser prenchida corretamente</value>
+  </data>
+  <data name="USUARIO_COM_EMAIL_INVALIDO" xml:space="preserve">
+    <value>O e-mail digitado é inválido</value>
+  </data>
+  <data name="USUARIO_COM_SENHA_INVALIDA" xml:space="preserve">
+    <value>A sua senha recisa conter no minímo 8 caracteres, contendo pelo menos uma letra maiúscula uma letra minúscula, um número e um caractere especial (! ? * #).</value>
+  </data>
 </root>

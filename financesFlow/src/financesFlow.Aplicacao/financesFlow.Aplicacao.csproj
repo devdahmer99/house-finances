@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="useCase\Usuario\**" />
+    <EmbeddedResource Remove="useCase\Usuario\**" />
+    <None Remove="useCase\Usuario\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="useCase\Arquivo\Pdf\Fonts\Raleway-Black.ttf" />
     <None Remove="useCase\Arquivo\Pdf\Fonts\Raleway-Regular.ttf" />
     <None Remove="useCase\Arquivo\Pdf\Fonts\WorkSans-Black.ttf" />

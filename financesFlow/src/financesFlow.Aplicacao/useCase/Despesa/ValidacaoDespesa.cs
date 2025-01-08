@@ -1,4 +1,4 @@
-﻿using financesFlow.Comunicacao.Requests;
+﻿using financesFlow.Comunicacao.Requests.Despesa;
 using financesFlow.Exception;
 using FluentValidation;
 

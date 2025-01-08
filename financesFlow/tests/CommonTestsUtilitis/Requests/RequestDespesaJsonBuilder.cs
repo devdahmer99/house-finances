@@ -1,6 +1,6 @@
 ﻿using Bogus;
 using financesFlow.Comunicacao.Enums;
-using financesFlow.Comunicacao.Requests;
+using financesFlow.Comunicacao.Requests.Despesa;
 
 namespace CommonTestsUtilitis.Requests;
 public class RequestDespesaJsonBuilder

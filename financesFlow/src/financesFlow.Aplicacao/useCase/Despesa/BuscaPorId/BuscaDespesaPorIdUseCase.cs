@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using financesFlow.Comunicacao.Responses;
+using financesFlow.Comunicacao.Responses.Despesa;
 using financesFlow.Dominio.Repositories.Despesas;
 using financesFlow.Exception;
 using financesFlow.Exception.ExceptionsBase;
