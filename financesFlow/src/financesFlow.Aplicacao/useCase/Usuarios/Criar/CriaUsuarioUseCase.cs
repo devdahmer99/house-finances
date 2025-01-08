@@ -7,6 +7,7 @@ using financesFlow.Dominio.Entidades;
 using financesFlow.Dominio.Repositories;
 using financesFlow.Dominio.Repositories.Usuarios;
 using financesFlow.Dominio.Seguranca.Criptografia;
+using financesFlow.Dominio.Seguranca.Tokens;
 using financesFlow.Exception;
 using financesFlow.Exception.ExceptionsBase;
 using FluentValidation.Results;
@@ -20,14 +21,19 @@ namespace financesFlow.Aplicacao.useCase.Usuarios.Criar
         private readonly IUnidadeDeTrabalho _unidade;
         private readonly IMapper _mapper;
         private readonly IEncriptadorSenha _encriptador;
+        private readonly IGerarTokenAcesso _gerarTokenAcesso;
 
-        public CriaUsuarioUseCase(IEncriptadorSenha encriptador, IRepositorioUsuarioSomenteLeitura repositorioLeitura, IRepositorioUsuarioSomenteEscrita repositorio, IUnidadeDeTrabalho unidade, IMapper mapper)
+        public CriaUsuarioUseCase(
+            IEncriptadorSenha encriptador, IRepositorioUsuarioSomenteLeitura repositorioLeitura,
+            IRepositorioUsuarioSomenteEscrita repositorio, IUnidadeDeTrabalho unidade,
+            IMapper mapper, IGerarTokenAcesso gerarTokenAcesso)
         {
             _encriptador = encriptador;
             _repositorio = repositorio;
             _repositorioLeitura = repositorioLeitura;
             _unidade = unidade;
             _mapper = mapper;
+            _gerarTokenAcesso = gerarTokenAcesso;
         }
 
         public async Task<ResponseCriaUsuarioJson> Execute(RequestCriaUsuarioJson request)
@@ -43,7 +49,8 @@ namespace financesFlow.Aplicacao.useCase.Usuarios.Criar
 
             return new ResponseCriaUsuarioJson
             {
-                Nome = request.Nome,
+                Nome = usuario.Nome,
+                Token = _gerarTokenAcesso.GerarTokenAcesso(usuario),
             };
         }
 

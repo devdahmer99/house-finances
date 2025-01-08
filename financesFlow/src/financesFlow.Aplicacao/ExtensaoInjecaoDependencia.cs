@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Math;
-using financesFlow.Aplicacao.AutoMapper;
+﻿using financesFlow.Aplicacao.AutoMapper;
 using financesFlow.Aplicacao.useCase.Arquivo.Excel;
 using financesFlow.Aplicacao.useCase.Arquivo.Pdf;
 using financesFlow.Aplicacao.useCase.Despesa.Atualiza;
@@ -9,7 +8,6 @@ using financesFlow.Aplicacao.useCase.Despesa.BuscaTotal;
 using financesFlow.Aplicacao.useCase.Despesa.Deleta;
 using financesFlow.Aplicacao.useCase.Despesa.Registrar;
 using financesFlow.Aplicacao.useCase.Usuarios.Criar;
-using financesFlow.Dominio.Seguranca.Criptografia;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace financesFlow.Aplicacao;

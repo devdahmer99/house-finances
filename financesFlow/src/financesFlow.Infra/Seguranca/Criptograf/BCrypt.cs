@@ -1,7 +1,7 @@
 ﻿using financesFlow.Dominio.Seguranca.Criptografia;
 using BC = BCrypt.Net.BCrypt;
 
-namespace financesFlow.Infra.Seguranca
+namespace financesFlow.Infra.Seguranca.Criptograf
 {
     internal class BCrypt : IEncriptadorSenha
     {
