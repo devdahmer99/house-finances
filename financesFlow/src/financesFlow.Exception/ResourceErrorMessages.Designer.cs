@@ -79,6 +79,15 @@ namespace financesFlow.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a E-mail ou Senha Invalidos, por favor digite os dados corretos..
+        /// </summary>
+        public static string EMAIL_OU_SENHA_INVALIDOS {
+            get {
+                return ResourceManager.GetString("EMAIL_OU_SENHA_INVALIDOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Metodo de pagamento não encontrado!.
         /// </summary>
         public static string METODO_PAGAMENTO_INEXISTENTE {

@@ -11,5 +11,10 @@ namespace financesFlow.Infra.Seguranca.Criptograf
 
             return senhaHash;
         }
+
+        public bool VerificaSenha(string senha, string senhaHash)
+        {
+            return BC.Verify(senha, senhaHash);
+        }
     }
 }

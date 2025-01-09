@@ -8,6 +8,11 @@ namespace financesFlow.Infra.DataAccess.Repositories.Usuario
         private readonly financesFlowDbContext _db;
         public RepositorioUsuario(financesFlowDbContext db) => _db = db;
 
+        public async Task<Dominio.Entidades.Usuario?> BuscaUsuarioPorEmail(string email)
+        {
+            return await _db.Usuarios.AsNoTracking().FirstOrDefaultAsync(user => user.Email.Equals(email));
+        }
+
         public async Task CriaUsuario(Dominio.Entidades.Usuario usuario)
         {
             await _db.Usuarios.AddAsync(usuario);
