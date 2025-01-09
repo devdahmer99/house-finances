@@ -1,10 +1,15 @@
+using System.Text;
 using financesFlow.API.Filtros;
 using financesFlow.API.Middleware;
 using financesFlow.Aplicacao;
 using financesFlow.Infra;
 using financesFlow.Infra.Migrations;
+using financesFlow.Infra.Seguranca;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -33,6 +38,36 @@ builder.Services.AddCors(options =>
                .SetIsOriginAllowed(_ => true);
      }));
 
+var jwtSettingsSection = builder.Configuration.GetSection("Settings:Jwt");
+builder.Services.Configure<JwtTokenSettings>(jwtSettingsSection);
+
+var jwtSettings = jwtSettingsSection.Get<JwtTokenSettings>();
+
+if (jwtSettings == null || string.IsNullOrWhiteSpace(jwtSettings.SigningKey))
+{
+    throw new InvalidOperationException("A SigningKey não pode ser nula ou vazia.");
+}
+var signingKey = jwtSettings.SigningKey;
+var keyBytes = Encoding.UTF8.GetBytes(signingKey);
+var key = new SymmetricSecurityKey(keyBytes);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = false,
+        ClockSkew = TimeSpan.Zero,
+        IssuerSigningKey = key
+    };
+});
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -44,6 +79,7 @@ app.UseMiddleware<CultureMiddleware>();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors("AllowSpecificOrigins");

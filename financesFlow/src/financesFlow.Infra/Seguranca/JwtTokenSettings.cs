@@ -1,4 +1,6 @@
-﻿namespace financesFlow.Infra.Seguranca
+﻿using Microsoft.Extensions.Configuration;
+
+namespace financesFlow.Infra.Seguranca
 {
     public class JwtTokenSettings
     {
