@@ -22,11 +22,11 @@ namespace financesFlow.Infra.Seguranca.Tokens
         public string GerarTokenAcesso(Usuario usuario)
         {
             var claims = new List<Claim>()
-        {
-            new Claim(ClaimTypes.Name, usuario.Nome),
-            new Claim(ClaimTypes.Sid, usuario.IdentificadorUsuario.ToString()),
-            new Claim(ClaimTypes.Role, usuario.Permissao)
-        };
+            {
+                new Claim(ClaimTypes.Name, usuario.Nome),
+                new Claim(ClaimTypes.Sid, usuario.IdentificadorUsuario.ToString()),
+                new Claim(ClaimTypes.Role, usuario.Permissao)
+            };
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -43,7 +43,6 @@ namespace financesFlow.Infra.Seguranca.Tokens
         }
         private SymmetricSecurityKey ChaveSeguranca()
         {
-            Console.WriteLine(_chaveEntrada);
             var chave = Encoding.UTF8.GetBytes(_chaveEntrada);
             return new SymmetricSecurityKey(chave);
         }
