@@ -13,12 +13,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace financesFlow.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class DespesasController : ControllerBase
 {
 
     [HttpPost("registradespesa")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [Authorize]
+
     public async Task<IActionResult> RegistrarDespesa([FromServices]IRegistrarDespesaUseCase useCase, [FromBody] RequestDespesaJson requestDespesa)
     {
       var response = await useCase.Execute(requestDespesa);
@@ -29,7 +30,6 @@ public class DespesasController : ControllerBase
     [HttpGet("buscadespesas")]
     [ProducesResponseType(typeof(ResponseDespesasJson), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [Authorize]
     public async Task<IActionResult> BuscaTodasDespesas([FromServices] IBuscaDespesaUseCase useCase)
     {
         var response = await useCase.Execute();
