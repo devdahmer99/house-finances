@@ -3,6 +3,6 @@
     public interface IEncriptadorSenha
     {
         string Encript(string senha);
-        public bool VerificaSenha(string senha, string senhaHash);
+        public bool Verify(string senha, string senhaHash);
     }
 }

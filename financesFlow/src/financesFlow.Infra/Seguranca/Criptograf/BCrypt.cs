@@ -5,16 +5,16 @@ namespace financesFlow.Infra.Seguranca.Criptograf
 {
     internal class BCrypt : IEncriptadorSenha
     {
-        public string Encript(string senha)
+        public string Encript(string password)
         {
-            string senhaHash = BC.HashPassword(senha);
+            string passwordHash = BC.HashPassword(password);
 
-            return senhaHash;
+            return passwordHash;
         }
 
-        public bool VerificaSenha(string senha, string senhaHash)
+        public bool Verify(string password, string passwordHash)
         {
-            return BC.Verify(senha, senhaHash);
+            return BC.Verify(password, passwordHash);
         }
     }
 }

@@ -38,32 +38,20 @@ builder.Services.AddCors(options =>
                .SetIsOriginAllowed(_ => true);
      }));
 
-var jwtSettingsSection = builder.Configuration.GetSection("Settings:Jwt");
-builder.Services.Configure<JwtTokenSettings>(jwtSettingsSection);
+var signingKey = builder.Configuration.GetValue<string>("Settings:Jwt:SigningKey");
 
-var jwtSettings = jwtSettingsSection.Get<JwtTokenSettings>();
-
-if (jwtSettings == null || string.IsNullOrWhiteSpace(jwtSettings.SigningKey))
+builder.Services.AddAuthentication(config =>
 {
-    throw new InvalidOperationException("A SigningKey não pode ser nula ou vazia.");
-}
-var signingKey = jwtSettings.SigningKey;
-var keyBytes = Encoding.UTF8.GetBytes(signingKey);
-var key = new SymmetricSecurityKey(keyBytes);
-
-builder.Services.AddAuthentication(options =>
+    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(config =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
+    config.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true,
+        ValidateIssuer = false,
         ValidateAudience = false,
-        ClockSkew = TimeSpan.Zero,
-        IssuerSigningKey = key
+        ClockSkew = new TimeSpan(0),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey!))
     };
 });
 

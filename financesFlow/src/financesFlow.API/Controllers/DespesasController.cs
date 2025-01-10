@@ -7,6 +7,7 @@ using financesFlow.Aplicacao.useCase.Despesa.Registrar;
 using financesFlow.Comunicacao.Requests.Despesa;
 using financesFlow.Comunicacao.Responses;
 using financesFlow.Comunicacao.Responses.Despesa;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace financesFlow.API.Controllers;
@@ -15,8 +16,9 @@ namespace financesFlow.API.Controllers;
 public class DespesasController : ControllerBase
 {
 
-    [HttpPost("RegistraDespesa")]
+    [HttpPost("registradespesa")]
     [ProducesResponseType(StatusCodes.Status201Created)]
+    [Authorize]
     public async Task<IActionResult> RegistrarDespesa([FromServices]IRegistrarDespesaUseCase useCase, [FromBody] RequestDespesaJson requestDespesa)
     {
       var response = await useCase.Execute(requestDespesa);
@@ -24,9 +26,10 @@ public class DespesasController : ControllerBase
       return Created(string.Empty, response);    
     }
 
-    [HttpGet("BuscaDespesasCadastradas")]
+    [HttpGet("buscadespesas")]
     [ProducesResponseType(typeof(ResponseDespesasJson), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [Authorize]
     public async Task<IActionResult> BuscaTodasDespesas([FromServices] IBuscaDespesaUseCase useCase)
     {
         var response = await useCase.Execute();
@@ -40,7 +43,7 @@ public class DespesasController : ControllerBase
     }
 
     [HttpGet]
-    [Route("BuscaDespesaCadastrada/{id}")]
+    [Route("buscadespesa/{id}")]
     [ProducesResponseType(typeof(ResponseDespesaJson), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> BuscaDespesaPorId([FromRoute] long id, [FromServices] IBuscaDespesaPorIdUseCase useCase)
@@ -50,7 +53,7 @@ public class DespesasController : ControllerBase
     }
 
     [HttpDelete]
-    [Route("DeletaDespesa/{id}")]
+    [Route("removedespesa/{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeletarDespesa([FromServices] IDeletaDespesaUseCase useCase, [FromRoute] long id)
@@ -60,7 +63,7 @@ public class DespesasController : ControllerBase
     }
 
     [HttpPut]
-    [Route("AtualizaDespesa/{id}")]
+    [Route("atualizadespesa/{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
@@ -70,7 +73,7 @@ public class DespesasController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet("BuscaTotalDespesas")]
+    [HttpGet("totaldespesas")]
     [ProducesResponseType(StatusCodes.Status202Accepted)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> BuscaTotalDespesas([FromServices] IBuscaTotalDespesasUseCase useCase)

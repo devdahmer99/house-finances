@@ -4,6 +4,6 @@ namespace financesFlow.Dominio.Seguranca.Tokens
 {
     public interface IGerarTokenAcesso
     {
-        string GerarTokenAcesso(Usuario usuario);
+        string Generate(Usuario usuario);
     }
 }

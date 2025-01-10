@@ -29,9 +29,9 @@ namespace financesFlow.Aplicacao.useCase.Usuarios.Login
                 throw new LoginInvalidException();
             }
 
-            var senhaEncontrada = _encriptador.VerificaSenha(requestLogin.Senha, usuario.Senha);
+            var passwordMatch = _encriptador.Verify(requestLogin.Senha, usuario.Senha);
 
-            if(senhaEncontrada == false)
+            if(passwordMatch == false)
             {
                 throw new LoginInvalidException();
             }
@@ -39,7 +39,7 @@ namespace financesFlow.Aplicacao.useCase.Usuarios.Login
             return new ResponseUsuarioRegistradoJson
             {
                 Nome = usuario.Nome,
-                Token = _gerarTokenAcesso.GerarTokenAcesso(usuario)
+                Token = _gerarTokenAcesso.Generate(usuario)
             };
         }
     }

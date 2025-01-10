@@ -50,7 +50,7 @@ namespace financesFlow.Aplicacao.useCase.Usuarios.Criar
             return new ResponseCriaUsuarioJson
             {
                 Nome = usuario.Nome,
-                Token = _gerarTokenAcesso.GerarTokenAcesso(usuario),
+                Token = _gerarTokenAcesso.Generate(usuario),
             };
         }
 

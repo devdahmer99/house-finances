@@ -11,7 +11,7 @@ namespace financesFlow.API.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        [HttpPost]
+        [HttpPost("efetualogin")]
         [ProducesResponseType(typeof(ResponseUsuarioRegistradoJson), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Login(

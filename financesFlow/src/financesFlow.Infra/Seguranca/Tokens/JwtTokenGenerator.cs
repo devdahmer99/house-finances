@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Text;
 using financesFlow.Dominio.Entidades;
 using financesFlow.Dominio.Seguranca.Tokens;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 
@@ -11,27 +10,26 @@ namespace financesFlow.Infra.Seguranca.Tokens
 {
     internal class JwtTokenGenerator : IGerarTokenAcesso
     {
-        private readonly uint _tempoExpiracaoMinutos;
-        private readonly string _chaveEntrada;
-        public JwtTokenGenerator(IOptions<JwtTokenSettings> jwtsettings)
+        private readonly uint _expirationTimeMinutes;
+        private readonly string _signingKey;
+        public JwtTokenGenerator( uint expirationTimeMinutes, string signingKey)
         {
-            _tempoExpiracaoMinutos = jwtsettings.Value.ExpiresMinutes;
-            _chaveEntrada = jwtsettings.Value.SigningKey!;
+            _expirationTimeMinutes = expirationTimeMinutes;
+            _signingKey = signingKey;
         }
         
-        public string GerarTokenAcesso(Usuario usuario)
+        public string Generate(Usuario usuario)
         {
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, usuario.Nome),
                 new Claim(ClaimTypes.Sid, usuario.IdentificadorUsuario.ToString()),
-                new Claim(ClaimTypes.Role, usuario.Permissao)
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Expires = DateTime.UtcNow.AddMinutes(_tempoExpiracaoMinutos),
-                SigningCredentials = new SigningCredentials(ChaveSeguranca(), SecurityAlgorithms.HmacSha256Signature),
+                Expires = DateTime.UtcNow.AddMinutes(_expirationTimeMinutes),
+                SigningCredentials = new SigningCredentials(SecurityKey(), SecurityAlgorithms.HmacSha256Signature),
                 Subject = new ClaimsIdentity(claims)
             };
 
@@ -41,10 +39,10 @@ namespace financesFlow.Infra.Seguranca.Tokens
 
             return tokenHandler.WriteToken(securityToken);
         }
-        private SymmetricSecurityKey ChaveSeguranca()
+        private SymmetricSecurityKey SecurityKey()
         {
-            var chave = Encoding.UTF8.GetBytes(_chaveEntrada);
-            return new SymmetricSecurityKey(chave);
+            var key = Encoding.UTF8.GetBytes(_signingKey);
+            return new SymmetricSecurityKey(key);
         }
     }
 }
