@@ -4,9 +4,9 @@ using financesFlow.API.Middleware;
 using financesFlow.Aplicacao;
 using financesFlow.Infra;
 using financesFlow.Infra.Migrations;
-using financesFlow.Infra.Seguranca;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +17,34 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
 }); ;
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = @"JWT Authorization header using the Bearer scheme. Enter 'Bearer [space] and the you token in the text input below.",
+        In = ParameterLocation.Header,
+        Scheme = "Bearer",
+        Type = SecuritySchemeType.ApiKey
+    });
+    config.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            },
+            Scheme = "ouath2",
+            Name = "Bearer",
+            In = ParameterLocation.Header
+        },
+        new List<string>()
+        }
+    });
+});
 builder.Services.AddMvc(options => options.Filters.Add(typeof(FiltroDeExcecao)));
 builder.Services.Configure<RouteOptions>(options =>
 {
