@@ -2,6 +2,7 @@
 using financesFlow.Aplicacao.useCase.Usuarios.Criar;
 using financesFlow.Exception;
 using FluentAssertions;
+using System.Drawing;
 
 namespace ValidatorsTests.Usuarios.Registrar
 {
@@ -22,7 +23,7 @@ namespace ValidatorsTests.Usuarios.Registrar
         [InlineData("")]
         [InlineData("     ")]
         [InlineData(null)]
-        public void Erro_Nome_Invalido(string nome)
+        public void Erro_Nome_Vazio(string nome)
         {
             var validator = new ValidacaoRegistrarUsuario();
             var request = RequestRegisterUserJsonBuilder.Build();
@@ -36,7 +37,7 @@ namespace ValidatorsTests.Usuarios.Registrar
 
         [Theory]
         [InlineData("")]
-        [InlineData("     ")]
+        [InlineData("      ")]
         [InlineData(null)]
         public void Erro_Email_Vazio(string email)
         {
@@ -47,7 +48,33 @@ namespace ValidatorsTests.Usuarios.Registrar
             var result = validator.Validate(request);
 
             result.IsValid.Should().BeFalse();
-            result.Errors.Should().ContainSingle().And.Contain(err => err.ErrorMessage.Equals(ResourceErrorMessages.USUARIO_COM_EMAIL_VAZIO));
+            result.Errors.Should().ContainSingle().And.Contain(e => e.ErrorMessage.Equals(ResourceErrorMessages.EMAIL_VAZIO));
+        }
+
+        [Fact]
+        public void Erro_Email_Invalido()
+        {
+            var validator = new ValidacaoRegistrarUsuario();
+            var request = RequestRegisterUserJsonBuilder.Build();
+            request.Email = "eduardo.com";
+
+            var result = validator.Validate(request);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().ContainSingle().And.Contain(e => e.ErrorMessage.Equals(ResourceErrorMessages.EMAIL_INVALIDO));
+        }
+
+        [Fact]
+        public void Erro_Senha_Invalida()
+        {
+            var validator = new ValidacaoRegistrarUsuario();
+            var request = RequestRegisterUserJsonBuilder.Build();
+            request.Senha = string.Empty;
+
+            var result = validator.Validate(request);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().ContainSingle().And.Contain(e => e.ErrorMessage.Equals(ResourceErrorMessages.SENHA_INVALIDA));
         }
     }
 }

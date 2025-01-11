@@ -18,37 +18,37 @@ namespace financesFlow.Aplicacao.useCase.Usuarios
         {
             if (string.IsNullOrWhiteSpace(senha))
             {
-                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.USUARIO_COM_SENHA_INVALIDA);
+                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.SENHA_INVALIDA);
                 return false;
             }
 
             if (senha.Length < 8) 
             {
-                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.USUARIO_COM_SENHA_INVALIDA);
+                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.SENHA_INVALIDA);
                 return false;
             }
 
             if (Regex.IsMatch(senha, pattern: @"[A-Z]+") == false)
             {
-                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.USUARIO_COM_SENHA_INVALIDA);
+                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.SENHA_INVALIDA);
                 return false;
             }
 
             if (Regex.IsMatch(senha, pattern: @"[a-z]+") == false)
             {
-                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.USUARIO_COM_SENHA_INVALIDA);
+                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.SENHA_INVALIDA);
                 return false;
             }
 
             if (Regex.IsMatch(senha, pattern: @"[0-9]+") == false)
             {
-                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.USUARIO_COM_SENHA_INVALIDA);
+                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.SENHA_INVALIDA);
                 return false;
             }
 
             if(Regex.IsMatch(senha, pattern: @"[\!\?\*\.]+") == false)
             {
-                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.USUARIO_COM_SENHA_INVALIDA);
+                context.MessageFormatter.AppendArgument(MENSAGEM_DE_ERRO, ResourceErrorMessages.SENHA_INVALIDA);
                 return false;
             }
 

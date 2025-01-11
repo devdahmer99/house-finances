@@ -56,11 +56,11 @@ namespace financesFlow.Aplicacao.useCase.Usuarios.Criar
 
         private async Task Validate(RequestCriaUsuarioJson requestUsuario)
         {
-            var result = new ValidacaoUsuario().Validate(requestUsuario);
+            var result = new ValidacaoRegistrarUsuario().Validate(requestUsuario);
             var existeEmail = await _repositorioLeitura.ExisteUsuarioAtivoComEmail(requestUsuario.Email);
             if (existeEmail)
             {
-                result.Errors.Add(new ValidationFailure(string.Empty, ResourceErrorMessages.USUARIO_COM_EMAIL_JA_EXISTENTE));
+                result.Errors.Add(new ValidationFailure(string.Empty, ResourceErrorMessages.EMAIL_EXISTE));
             }
 
             if (result.IsValid == false)
