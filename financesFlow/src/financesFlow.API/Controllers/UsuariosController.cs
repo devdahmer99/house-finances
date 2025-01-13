@@ -1,7 +1,5 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using financesFlow.Aplicacao.useCase.Usuarios.Criar;
+﻿using financesFlow.Aplicacao.useCase.Usuarios.Criar;
 using financesFlow.Comunicacao.Requests.Usuario;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace financesFlow.API.Controllers
@@ -10,7 +8,7 @@ namespace financesFlow.API.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        [HttpPost("/RegistraUsuario")]
+        [HttpPost("registrausuario")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CriaUsuario([FromServices] ICriarUsuarioUseCase useCase, [FromBody] RequestCriaUsuarioJson requestUsuario)

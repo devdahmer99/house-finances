@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\financesFlow.Aplicacao\financesFlow.Aplicacao.csproj" />
     <ProjectReference Include="..\..\src\financesFlow.Comunicacao\financesFlow.Comunicacao.csproj" />
+    <ProjectReference Include="..\..\src\financesFlow.Dominio\financesFlow.Dominio.csproj" />
   </ItemGroup>
 
 </Project>

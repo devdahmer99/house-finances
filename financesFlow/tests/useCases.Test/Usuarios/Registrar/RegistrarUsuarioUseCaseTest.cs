@@ -45,7 +45,7 @@ public class RegistrarUsuarioUseCaseTest
         var acao = async () => await useCase.Execute(request);
         var result = await acao.Should().ThrowAsync<ErrorOnValidationException>();
 
-        result.Where(ex => ex.BuscaErrors().Count == 1 && ex.BuscaErrors().Contains(ResourceErrorMessages.EMAIL_EXISTE));
+        result.Where(ex => ex.BuscaErrors().Count == 1 && ex.BuscaErrors().Contains(ResourceErrorMessages.USUARIO_COM_EMAIL_JA_EXISTENTE));
     }
 
 

@@ -42,7 +42,7 @@ public static class ExtensaoInjecaoDependencia
     private static void AdicionarDbContext(IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Connection");
-        var serverVersion = new MySqlServerVersion(new Version(9, 1, 0));
+        var serverVersion = ServerVersion.AutoDetect(connectionString);
 
         services.AddDbContext<financesFlowDbContext>(config => config.UseMySql(connectionString, serverVersion));
     }
