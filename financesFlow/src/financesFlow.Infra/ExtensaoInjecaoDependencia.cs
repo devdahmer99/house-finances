@@ -6,6 +6,7 @@ using financesFlow.Dominio.Seguranca.Tokens;
 using financesFlow.Infra.DataAccess;
 using financesFlow.Infra.DataAccess.Repositories.Despesa;
 using financesFlow.Infra.DataAccess.Repositories.Usuario;
+using financesFlow.Infra.Extensions;
 using financesFlow.Infra.Seguranca.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,10 +17,14 @@ public static class ExtensaoInjecaoDependencia
 {
     public static void AdicionarInfra(this IServiceCollection services, IConfiguration configuration)
     {
-        AdicionarDbContext(services, configuration);
         AdicionarRepositorios(services);
         AddToken(services,configuration);
         services.AddScoped<IEncriptadorSenha, Seguranca.Criptograf.BCrypt>();
+
+        if (configuration.IsTestEnvironment() == false)
+        {
+            AdicionarDbContext(services, configuration);
+        }
     }
 
     private static void AdicionarRepositorios(IServiceCollection services)

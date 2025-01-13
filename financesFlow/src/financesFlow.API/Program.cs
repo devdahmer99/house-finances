@@ -7,6 +7,7 @@ using financesFlow.Infra.Migrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using financesFlow.Infra.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -101,7 +102,10 @@ app.UseCors("AllowSpecificOrigins");
 
 app.MapControllers();
 
-await MigrateDatabase();
+if(builder.Configuration.IsTestEnvironment() == false)
+{
+    await MigrateDatabase();
+}
 
 app.Run();
 
