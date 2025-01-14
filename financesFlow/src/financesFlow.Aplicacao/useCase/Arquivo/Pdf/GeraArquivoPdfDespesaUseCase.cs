@@ -149,7 +149,18 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
 
         var caminhoImagem = Path.Combine(diretorio!, "images", "perfil.png");
 
-        linha.Cells[0].AddImage(caminhoImagem);
+        if(File.Exists(caminhoImagem))
+        {
+            var imagem = linha.Cells[0].AddImage(caminhoImagem);
+            imagem.LockAspectRatio = true;
+            imagem.Width = "500pt"; // Ajuste a largura conforme necessário
+            imagem.Height = "500pt";
+        }
+        else
+        {
+            linha.Cells[0].AddParagraph("Imagem não encontradaS");
+        }
+
         linha.Cells[1].AddParagraph($"Olá, {name}");
         linha.Cells[1].Format.Font = new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
         linha.Cells[1].VerticalAlignment = VerticalAlignment.Center;
