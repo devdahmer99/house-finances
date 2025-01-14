@@ -25,9 +25,9 @@ internal class RepositorioDespesa : IRepositorioDespesaSomenteLeitura, IReposito
         return await _db.Despesas.AsNoTracking().FirstOrDefaultAsync(des => des.Id == id);
     }
 
-    async Task<Dominio.Entidades.Despesa?> IRepositorioDespesaSomenteAtualizacao.BuscaPorId(long id)
+    async Task<Dominio.Entidades.Despesa?> IRepositorioDespesaSomenteAtualizacao.BuscaPorId(Dominio.Entidades.Usuario user, long id)
     {
-        return await _db.Despesas.FirstOrDefaultAsync(des => des.Id == id);
+        return await _db.Despesas.FirstOrDefaultAsync(des => des.Id == id && des.UsuarioId == user.Id);
     }
 
     public async Task<List<Dominio.Entidades.Despesa>> BuscarTudo()

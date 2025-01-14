@@ -3,6 +3,6 @@
 namespace financesFlow.Dominio.Repositories.Despesas;
 public interface IRepositorioDespesaSomenteAtualizacao
 {
-    Task<Despesa?> BuscaPorId(long id);
+    Task<Despesa?> BuscaPorId(Usuario usuario,long id);
     void AtualizaDespesa(Despesa despesa);
 }

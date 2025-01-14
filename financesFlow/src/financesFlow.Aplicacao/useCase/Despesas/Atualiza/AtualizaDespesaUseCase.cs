@@ -28,8 +28,7 @@ public class AtualizaDespesaUseCase : IAtualizaDespesaUseCase
 
         var loggedUser = await _loggedUser.Get();
 
-        var despesa = await _repositorioSomenteAtualizacao.BuscaPorId(id);
-        despesa!.UsuarioId = loggedUser.Id;
+        var despesa = await _repositorioSomenteAtualizacao.BuscaPorId(loggedUser, id);
 
         if (despesa is null)
         {
