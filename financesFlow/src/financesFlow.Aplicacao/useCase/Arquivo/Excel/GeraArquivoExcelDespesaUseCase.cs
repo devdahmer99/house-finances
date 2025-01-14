@@ -54,7 +54,7 @@ public class GeraArquivoExcelDespesaUseCase : IGeraArquivoExcelDespesaUseCase
         return pagamento switch
         {
             MetodoPagamento.Pix => "Pix",
-            MetodoPagamento.Cartão => "Cartão",
+            MetodoPagamento.Cartao => "Cartão",
             MetodoPagamento.Boleto => "Boleto",
             _ => string.Empty
         };

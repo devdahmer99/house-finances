@@ -9,9 +9,9 @@ public class RequestDespesaJsonBuilder
     {
        return new Faker<RequestDespesaJson>()
             .RuleFor(request => request.NomeDespesa, faker => faker.Commerce.ProductName())
-            .RuleFor(request => request.DescricaoDespesa, faker => faker.Lorem.Paragraph())
+            .RuleFor(request => request.Descricao, faker => faker.Lorem.Paragraph())
             .RuleFor(request => request.DataDespesa, faker => faker.Date.Past())
-            .RuleFor(request => request.FormaDePagamento, faker => faker.PickRandom<MetodoPagamento>())
+            .RuleFor(request => request.MetodoPagamento, faker => faker.PickRandom<MetodoPagamento>())
             .RuleFor(request => request.ValorDespesa, faker => faker.Random.Decimal());
     }
 }

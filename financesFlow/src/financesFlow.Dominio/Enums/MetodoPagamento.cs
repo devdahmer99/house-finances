@@ -2,6 +2,6 @@
 public enum MetodoPagamento
 {
     Pix = 1,
-    Cartão = 2,
-    Boleto = 3
+    Cartao = 2,
+    Boleto = 3,
 }

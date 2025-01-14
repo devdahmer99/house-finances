@@ -11,8 +11,8 @@ namespace WebApi.Test
 {
     public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
-        private financesFlow.Dominio.Entidades.Usuario _user;
-        private string _password;
+        private financesFlow.Dominio.Entidades.Usuario? _user;
+        private string? _password;
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             
@@ -34,11 +34,11 @@ namespace WebApi.Test
                     StartDatabase(dbContext, encriptador);
                 });
         }
-        public string getNome() => _user.Nome;
+        public string getNome() => _user!.Nome;
 
-        public string getEmail() => _user.Email;
+        public string getEmail() => _user!.Email;
 
-        public string getPassword() => _password;
+        public string getPassword() => _password!;
 
         private void StartDatabase(financesFlowDbContext dbContext, IEncriptadorSenha encriptador)
         {

@@ -1,9 +1,9 @@
-﻿using financesFlow.Aplicacao.useCase.Despesa.Atualiza;
-using financesFlow.Aplicacao.useCase.Despesa.Busca;
-using financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
-using financesFlow.Aplicacao.useCase.Despesa.BuscaTotal;
-using financesFlow.Aplicacao.useCase.Despesa.Deleta;
-using financesFlow.Aplicacao.useCase.Despesa.Registrar;
+﻿using financesFlow.Aplicacao.useCase.Despesas.Atualiza;
+using financesFlow.Aplicacao.useCase.Despesas.Busca;
+using financesFlow.Aplicacao.useCase.Despesas.BuscaPorId;
+using financesFlow.Aplicacao.useCase.Despesas.BuscaTotal;
+using financesFlow.Aplicacao.useCase.Despesas.Deleta;
+using financesFlow.Aplicacao.useCase.Despesas.Registrar;
 using financesFlow.Comunicacao.Requests.Despesa;
 using financesFlow.Comunicacao.Responses;
 using financesFlow.Comunicacao.Responses.Despesa;

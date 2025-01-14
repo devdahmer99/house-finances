@@ -5,7 +5,7 @@ using Moq;
 namespace CommonTestsUtilitis.Token;
 public class JwtTokenGeneratorBuilder
 {
-    public static IGerarTokenAcesso Builder()
+    public static IGerarTokenAcesso Build()
     {
         var mock = new Mock<IGerarTokenAcesso>();
 

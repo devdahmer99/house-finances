@@ -45,7 +45,7 @@ public class RegistrarUsuarioUseCaseTest
         var acao = async () => await useCase.Execute(request);
         var result = await acao.Should().ThrowAsync<ErrorOnValidationException>();
 
-        result.Where(ex => ex.BuscaErrors().Count == 1 && ex.BuscaErrors().Contains(ResourceErrorMessages.USUARIO_COM_EMAIL_JA_EXISTENTE));
+        result.Where(ex => ex.BuscaErrors().Count == 1 && ex.BuscaErrors().Contains(ResourceErrorMessages.EMAIL_EXISTE));
     }
 
 
@@ -55,7 +55,7 @@ public class RegistrarUsuarioUseCaseTest
         var unidade = UnidadeDeTrabalhoBuilder.Build();
         var repositorio = RepositorioUsuarioSomenteEscrita.Build();
         var encriptador = new EncriptadorSenhaBuilder().Build();
-        var gerarTokenAcesso = JwtTokenGeneratorBuilder.Builder();
+        var gerarTokenAcesso = JwtTokenGeneratorBuilder.Build();
         var repositorioLeitura = new RepositorioUsuarioSomenteLeituraBuilder().Build();
 
         if(string.IsNullOrWhiteSpace(email) == false)

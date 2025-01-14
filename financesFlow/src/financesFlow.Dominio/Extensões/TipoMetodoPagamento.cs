@@ -8,7 +8,7 @@ public static class TipoMetodoPagamento
         return metodoPagamento switch
         {
             MetodoPagamento.Pix => ResourceReportGenerationMessages.PIX,
-            MetodoPagamento.Cartão => ResourceReportGenerationMessages.CARTAO,
+            MetodoPagamento.Cartao => ResourceReportGenerationMessages.CARTAO,
             MetodoPagamento.Boleto => ResourceReportGenerationMessages.BOLETO,
             _ => "Não identificado"
         };

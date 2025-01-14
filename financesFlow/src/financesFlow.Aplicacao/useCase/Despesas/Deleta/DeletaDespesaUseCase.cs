@@ -1,9 +1,10 @@
-﻿using financesFlow.Dominio.Repositories;
+﻿using financesFlow.Aplicacao.useCase.Despesas.Deleta;
+using financesFlow.Dominio.Repositories;
 using financesFlow.Dominio.Repositories.Despesas;
 using financesFlow.Exception;
 using financesFlow.Exception.ExceptionsBase;
 
-namespace financesFlow.Aplicacao.useCase.Despesa.Deleta;
+namespace financesFlow.Aplicacao.useCase.Despesas.Deleta;
 public class DeletaDespesaUseCase : IDeletaDespesaUseCase
 {
     private readonly IRepositorioDepesaSomenteEscrita _repositorioDepesaSomenteEscrita;

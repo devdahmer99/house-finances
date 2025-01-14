@@ -6,7 +6,7 @@ using financesFlow.Dominio.Repositories.Despesas;
 using financesFlow.Exception;
 using financesFlow.Exception.ExceptionsBase;
 
-namespace financesFlow.Aplicacao.useCase.Despesa.Atualiza;
+namespace financesFlow.Aplicacao.useCase.Despesas.Atualiza;
 public class AtualizaDespesaUseCase : IAtualizaDespesaUseCase
 {
     private readonly IRepositorioDespesaSomenteAtualizacao _repositorioSomenteAtualizacao;

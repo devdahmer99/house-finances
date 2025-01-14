@@ -12,6 +12,11 @@ public class RepositorioUsuarioSomenteLeituraBuilder
     }
     public IRepositorioUsuarioSomenteLeitura Build() => _repositorio.Object;
 
+    public void ExisteUsuarioAtivoComEmail(string email)
+    {
+        _repositorio.Setup(userReadOnly => userReadOnly.ExisteUsuarioAtivoComEmail(email)).ReturnsAsync(true);
+    }
+
     public RepositorioUsuarioSomenteLeituraBuilder BuscaUsuarioPorEmail(Usuario user)
     {
         _repositorio.Setup(userRepository => userRepository.BuscaUsuarioPorEmail(user.Email)).ReturnsAsync(user);

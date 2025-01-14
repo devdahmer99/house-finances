@@ -1,6 +1,6 @@
 ﻿using financesFlow.Dominio.Repositories.Despesas;
 
-namespace financesFlow.Aplicacao.useCase.Despesa.BuscaTotal;
+namespace financesFlow.Aplicacao.useCase.Despesas.BuscaTotal;
 public class BuscaTotalDespesasUseCase : IBuscaTotalDespesasUseCase
 {
     private readonly IRepositorioDespesaSomenteLeitura _repositorio;

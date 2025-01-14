@@ -1,4 +1,5 @@
 ﻿using CommonTestsUtilitis.Requests;
+using financesFlow.Aplicacao.useCase.Despesas;
 using financesFlow.Comunicacao.Enums;
 using financesFlow.Exception;
 using FluentAssertions;
@@ -9,7 +10,7 @@ public class RegistrarDespesaTest
     [Fact]
     public void Success()
     {
-        var validator = new financesFlow.Aplicacao.useCase.Despesa.ValidacaoDespesa();
+        var validator = new ValidacaoDespesa();
 
         var request = RequestDespesaJsonBuilder.Build();
 
@@ -21,7 +22,7 @@ public class RegistrarDespesaTest
     [Fact]
     public void Error_Nome_Vazio()
     {
-        var validator = new financesFlow.Aplicacao.useCase.Despesa.ValidacaoDespesa();
+        var validator = new ValidacaoDespesa();
         var request = RequestDespesaJsonBuilder.Build();
         request.NomeDespesa = string.Empty;
 
@@ -34,7 +35,7 @@ public class RegistrarDespesaTest
     [Fact]
     public void Data_Incorreta()
     {
-        var validator = new financesFlow.Aplicacao.useCase.Despesa.ValidacaoDespesa();
+        var validator = new ValidacaoDespesa();
         var request = RequestDespesaJsonBuilder.Build();
         request.DataDespesa = DateTime.UtcNow.AddDays(1);
 
@@ -47,9 +48,9 @@ public class RegistrarDespesaTest
     [Fact]
     public void Metodo_Pagamento_Invalido()
     {
-        var validator = new financesFlow.Aplicacao.useCase.Despesa.ValidacaoDespesa();
+        var validator = new ValidacaoDespesa();
         var request = RequestDespesaJsonBuilder.Build();
-        request.FormaDePagamento = (MetodoPagamento)700;
+        request.MetodoPagamento = (MetodoPagamento)700;
 
         var result = validator.Validate(request);
 
@@ -62,7 +63,7 @@ public class RegistrarDespesaTest
     [InlineData(-1)]
     public void Error_Valor_Incorreto(decimal valorPagamento)
     {
-        var validator = new financesFlow.Aplicacao.useCase.Despesa.ValidacaoDespesa();
+        var validator = new ValidacaoDespesa();
         var request = RequestDespesaJsonBuilder.Build();
         request.ValorDespesa = valorPagamento;
 

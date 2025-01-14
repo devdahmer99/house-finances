@@ -2,7 +2,7 @@
 using financesFlow.Comunicacao.Responses.Despesa;
 using financesFlow.Dominio.Repositories.Despesas;
 
-namespace financesFlow.Aplicacao.useCase.Despesa.Busca
+namespace financesFlow.Aplicacao.useCase.Despesas.Busca
 {
     public class BuscaDespesaUseCase : IBuscaDespesaUseCase
     {

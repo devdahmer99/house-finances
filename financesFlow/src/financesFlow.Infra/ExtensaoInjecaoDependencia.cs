@@ -3,11 +3,13 @@ using financesFlow.Dominio.Repositories.Despesas;
 using financesFlow.Dominio.Repositories.Usuarios;
 using financesFlow.Dominio.Seguranca.Criptografia;
 using financesFlow.Dominio.Seguranca.Tokens;
+using financesFlow.Dominio.Services.LoggedUser;
 using financesFlow.Infra.DataAccess;
 using financesFlow.Infra.DataAccess.Repositories.Despesa;
 using financesFlow.Infra.DataAccess.Repositories.Usuario;
 using financesFlow.Infra.Extensions;
 using financesFlow.Infra.Seguranca.Tokens;
+using financesFlow.Infra.Services.LoggedUser;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,10 +19,12 @@ public static class ExtensaoInjecaoDependencia
 {
     public static void AdicionarInfra(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<IEncriptadorSenha, Seguranca.Criptograf.BCrypt>();
+        services.AddScoped<ILoggedUser, LoggedUser>();
+
         AdicionarRepositorios(services);
         AddToken(services,configuration);
-        services.AddScoped<IEncriptadorSenha, Seguranca.Criptograf.BCrypt>();
-
+       
         if (configuration.IsTestEnvironment() == false)
         {
             AdicionarDbContext(services, configuration);

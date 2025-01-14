@@ -39,7 +39,7 @@ public class LoginUsuarioUseCaseTest
     {
         var repositorioLeitura = new RepositorioUsuarioSomenteLeituraBuilder().BuscaUsuarioPorEmail(user).Build();
         var encritador = new EncriptadorSenhaBuilder().Verify(password).Build();
-        var gerarTokenAcesso = JwtTokenGeneratorBuilder.Builder();
+        var gerarTokenAcesso = JwtTokenGeneratorBuilder.Build();
 
         return new LoginUsuarioUseCase(repositorioLeitura, encritador, gerarTokenAcesso);
     }

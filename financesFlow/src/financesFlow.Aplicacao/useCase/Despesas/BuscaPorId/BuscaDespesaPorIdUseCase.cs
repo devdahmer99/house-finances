@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using financesFlow.Aplicacao.useCase.Despesas.BuscaPorId;
 using financesFlow.Comunicacao.Responses.Despesa;
 using financesFlow.Dominio.Repositories.Despesas;
 using financesFlow.Exception;
 using financesFlow.Exception.ExceptionsBase;
 
-namespace financesFlow.Aplicacao.useCase.Despesa.BuscaPorId;
+namespace financesFlow.Aplicacao.useCase.Despesas.BuscaPorId;
 public class BuscaDespesaPorIdUseCase : IBuscaDespesaPorIdUseCase
 {
     private readonly IRepositorioDespesaSomenteLeitura _repositorio;

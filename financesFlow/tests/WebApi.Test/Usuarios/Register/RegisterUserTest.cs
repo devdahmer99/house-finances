@@ -1,8 +1,15 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using CommonTestsUtilitis.Criptograria;
+using CommonTestsUtilitis.Mapper;
+using CommonTestsUtilitis.Repositories;
+using CommonTestsUtilitis.Token;
+using CommonTestUtilities.Repositories;
 using CommonTestUtilities.Requests;
+using financesFlow.Aplicacao.useCase.Usuarios.Criar;
 using financesFlow.Exception;
+using financesFlow.Exception.ExceptionsBase;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 
@@ -34,23 +41,51 @@ namespace WebApi.Test.Usuarios.Register
 
             response.RootElement.GetProperty("token").GetString().Should().NotBeNullOrEmpty();
         }
+
         [Fact]
-        public async Task Error_Empty_Name()
+        public async Task Error_Name_Empty()
         {
             var request = RequestRegisterUserJsonBuilder.Build();
             request.Nome = string.Empty;
 
-            var result = await _httpClient.PostAsJsonAsync(METHOD, request);
+            var useCase = CreateUseCase();
 
-            result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            var act = async () => await useCase.Execute(request);
 
-            var body = await result.Content.ReadAsStreamAsync();
+            var result = await act.Should().ThrowAsync<ErrorOnValidationException>();
 
-            var response = await JsonDocument.ParseAsync(body);
+            result.Where(ex => ex.BuscaErrors().Count == 1 && ex.BuscaErrors().Contains(ResourceErrorMessages.NOME_VAZIO));
+        }
 
-            var errors = response.RootElement.GetProperty("ErrorMessages").EnumerateArray();
+        [Fact]
+        public async Task Error_Email_Already_Exist()
+        {
+            var request = RequestRegisterUserJsonBuilder.Build();
 
-            errors.Should().HaveCount(1).And.Contain(error => error.GetString()!.Equals(ResourceErrorMessages.NOME_VAZIO));
+            var useCase = CreateUseCase(request.Email);
+
+            var act = async () => await useCase.Execute(request);
+
+            var result = await act.Should().ThrowAsync<ErrorOnValidationException>();
+
+            result.Where(ex => ex.BuscaErrors().Count == 1 && ex.BuscaErrors().Contains(ResourceErrorMessages.EMAIL_EXISTE));
+        }
+
+        private CriaUsuarioUseCase CreateUseCase(string? email = null)
+        {
+            var mapper = MapperBuilder.Build();
+            var unitOfWork = UnidadeDeTrabalhoBuilder.Build();
+            var writeRepository = RepositorioUsuarioSomenteEscrita.Build();
+            var passwordEncripter = new EncriptadorSenhaBuilder().Build();
+            var tokenGenerator = JwtTokenGeneratorBuilder.Build();
+            var readRepository = new RepositorioUsuarioSomenteLeituraBuilder();
+
+            if (string.IsNullOrWhiteSpace(email) == false)
+            {
+                readRepository.ExisteUsuarioAtivoComEmail(email);
+            }
+
+            return new CriaUsuarioUseCase(passwordEncripter, readRepository.Build(), writeRepository, unitOfWork, mapper ,tokenGenerator);
         }
     }
 }

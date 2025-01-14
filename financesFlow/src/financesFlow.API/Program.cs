@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using financesFlow.Infra.Extensions;
+using financesFlow.Dominio.Seguranca.Tokens;
+using financesFlow.API.Token;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +57,8 @@ builder.Services.Configure<RouteOptions>(options =>
 
 builder.Services.AdicionarInfra(builder.Configuration);
 builder.Services.AdicionarAplicacao();
+builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddCors(options => 
      options.AddPolicy("AllowSpecificOrigins", policy =>
      {

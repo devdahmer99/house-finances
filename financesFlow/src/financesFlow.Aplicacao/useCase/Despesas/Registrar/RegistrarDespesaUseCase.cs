@@ -1,32 +1,42 @@
 ﻿using AutoMapper;
 using financesFlow.Comunicacao.Requests.Despesa;
 using financesFlow.Comunicacao.Responses.Despesa;
+using financesFlow.Dominio.Entidades;
 using financesFlow.Dominio.Repositories;
 using financesFlow.Dominio.Repositories.Despesas;
+using financesFlow.Dominio.Services.LoggedUser;
 using financesFlow.Exception.ExceptionsBase;
 
-namespace financesFlow.Aplicacao.useCase.Despesa.Registrar;
+namespace financesFlow.Aplicacao.useCase.Despesas.Registrar;
 public class RegistrarDespesaUseCase : IRegistrarDespesaUseCase
 {
     private readonly IRepositorioDepesaSomenteEscrita _repositorio;
     private readonly IUnidadeDeTrabalho _unidade;
     private readonly IMapper _mapper;
-    public RegistrarDespesaUseCase(IRepositorioDepesaSomenteEscrita repositorio, IUnidadeDeTrabalho unidade, IMapper mapper)
+    private readonly ILoggedUser _loggedUser;
+    public RegistrarDespesaUseCase(IRepositorioDepesaSomenteEscrita repositorio, 
+        IUnidadeDeTrabalho unidade, IMapper mapper, ILoggedUser loggedUser)
     {
         _repositorio = repositorio;
         _unidade = unidade;
         _mapper = mapper;
+        _loggedUser = loggedUser;
     }
-    public async Task<ResponseDespesaJson> Execute(RequestDespesaJson requestDespesa)
+    public async Task<ResponseDespesaJson> Execute(RequestDespesaJson request)
     {
-        Validate(requestDespesa);
+        Validate(request);
 
-        var Entidade = _mapper.Map<Dominio.Entidades.Despesa>(requestDespesa);
+        var loggedUser = await _loggedUser.Get();
 
-        await _repositorio.AdicionarDespesa(Entidade);
+        var despesa = _mapper.Map<Despesa>(request);
+
+        despesa.IdUsuario = loggedUser.Id;
+
+        await _repositorio.AdicionarDespesa(despesa);
+
         await _unidade.Commit();
 
-        return _mapper.Map<ResponseDespesaJson>(Entidade);
+        return _mapper.Map<ResponseDespesaJson>(despesa);
     }
 
     private void Validate(RequestDespesaJson requestDespesa)
