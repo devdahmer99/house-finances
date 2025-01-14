@@ -20,7 +20,8 @@ public class DeletaDespesaUseCase : IDeletaDespesaUseCase
 
     public async Task Execute(long id)
     {
-        var result = await _repositorioDepesaSomenteEscrita.DeletaDespesa(id);
+        var loggedUser = await _loggedUser.Get();
+        var result = await _repositorioDepesaSomenteEscrita.DeletaDespesa(loggedUser, id);
         if( result == false)
         {
             throw new NotFoundException(ResourceErrorMessages.DESPESA_NAO_ENCONTRADA);

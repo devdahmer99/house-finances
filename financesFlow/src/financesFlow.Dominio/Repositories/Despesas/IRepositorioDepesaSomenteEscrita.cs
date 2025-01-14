@@ -9,5 +9,5 @@ public interface IRepositorioDepesaSomenteEscrita
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<bool> DeletaDespesa(long id);
+    Task<bool> DeletaDespesa(Usuario user, long id);
 }

@@ -35,9 +35,9 @@ internal class RepositorioDespesa : IRepositorioDespesaSomenteLeitura, IReposito
         return await _db.Despesas.AsNoTracking().OrderBy(des => des.DataDespesa).ThenBy(des => des.Id).Take(10).ToListAsync();
     }
 
-    public async Task<bool> DeletaDespesa(long id)
+    public async Task<bool> DeletaDespesa(Dominio.Entidades.Usuario user, long id)
     {
-        var result = await _db.Despesas.FirstOrDefaultAsync(des => des.Id == id);
+        var result = await _db.Despesas.FirstOrDefaultAsync(des => des.Id == id && des.UsuarioId == user.Id);
         if (result == null)
         {
             return false;
