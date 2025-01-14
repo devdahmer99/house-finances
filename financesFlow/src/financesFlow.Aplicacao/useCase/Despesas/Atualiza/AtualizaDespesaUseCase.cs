@@ -3,6 +3,7 @@ using AutoMapper;
 using financesFlow.Comunicacao.Requests.Despesa;
 using financesFlow.Dominio.Repositories;
 using financesFlow.Dominio.Repositories.Despesas;
+using financesFlow.Dominio.Services.LoggedUser;
 using financesFlow.Exception;
 using financesFlow.Exception.ExceptionsBase;
 
@@ -12,19 +13,25 @@ public class AtualizaDespesaUseCase : IAtualizaDespesaUseCase
     private readonly IRepositorioDespesaSomenteAtualizacao _repositorioSomenteAtualizacao;
     private readonly IUnidadeDeTrabalho _unidadeDeTrabalho;
     private readonly IMapper _mapper;
-    public AtualizaDespesaUseCase(IRepositorioDespesaSomenteAtualizacao repositorioSomenteAtualizacao, IUnidadeDeTrabalho unidadeDeTrabalho, IMapper mapper)
+    private readonly ILoggedUser _loggedUser;
+    public AtualizaDespesaUseCase(IRepositorioDespesaSomenteAtualizacao repositorioSomenteAtualizacao,
+        IUnidadeDeTrabalho unidadeDeTrabalho, IMapper mapper, ILoggedUser loggedUser)
     {
         _repositorioSomenteAtualizacao = repositorioSomenteAtualizacao;
         _unidadeDeTrabalho = unidadeDeTrabalho;
         _mapper = mapper;
+        _loggedUser = loggedUser;
     }
     public async Task Execute(long id, RequestDespesaJson request)
     {
         Validate(request);
 
-        var despesa = await _repositorioSomenteAtualizacao.BuscaPorId(id);
+        var loggedUser = await _loggedUser.Get();
 
-        if(despesa is null)
+        var despesa = await _repositorioSomenteAtualizacao.BuscaPorId(id);
+        despesa!.UsuarioId = loggedUser.Id;
+
+        if (despesa is null)
         {
             throw new NotFoundException(ResourceErrorMessages.DESPESA_NAO_ENCONTRADA);
         }
