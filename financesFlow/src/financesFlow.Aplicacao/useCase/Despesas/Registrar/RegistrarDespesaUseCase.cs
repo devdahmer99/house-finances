@@ -30,7 +30,7 @@ public class RegistrarDespesaUseCase : IRegistrarDespesaUseCase
 
         var despesa = _mapper.Map<Despesa>(request);
 
-        despesa.IdUsuario = loggedUser.Id;
+        despesa.UsuarioId = loggedUser.Id;
 
         await _repositorio.AdicionarDespesa(despesa);
 

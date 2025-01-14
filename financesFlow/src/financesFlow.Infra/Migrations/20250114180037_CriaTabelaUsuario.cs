@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -50,7 +49,6 @@ namespace financesFlow.Infra.Migrations
                     DataDespesa = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ValorDespesa = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     MetodoPagamento = table.Column<int>(type: "int", nullable: false),
-                    IdUsuario = table.Column<long>(type: "bigint", nullable: false),
                     UsuarioId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>

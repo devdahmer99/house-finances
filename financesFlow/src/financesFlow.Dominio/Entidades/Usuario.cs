@@ -9,4 +9,6 @@ public class Usuario
     public string Senha { get; set; } = string.Empty;
     public Guid IdentificadorUsuario { get; set; } = Guid.NewGuid();
     public string Permissao { get; set; } = Permissoes.USUARIO;
+
+    public ICollection<Despesa>? Despesas { get; set; }
 }

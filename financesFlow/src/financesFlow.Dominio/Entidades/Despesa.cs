@@ -9,7 +9,6 @@ public class Despesa
     public DateTime DataDespesa { get; set; }
     public decimal ValorDespesa { get; set; }
     public MetodoPagamento MetodoPagamento { get; set; }
-
-    public long IdUsuario { get; set; }
+    public long UsuarioId { get; set; }
     public Usuario Usuario { get; set; } = default!;
 }

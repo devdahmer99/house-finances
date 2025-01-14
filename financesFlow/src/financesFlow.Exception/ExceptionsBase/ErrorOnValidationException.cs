@@ -14,10 +14,6 @@ public class ErrorOnValidationException : financesFlowException
         }
         _errors = errorMessages;
     }
-    //public ErrorOnValidationException(List<string> errorMessages) : base(string.Empty)
-    //{
-    //    _errors = errorMessages;
-    //}
 
     public override List<string> BuscaErrors()
     {

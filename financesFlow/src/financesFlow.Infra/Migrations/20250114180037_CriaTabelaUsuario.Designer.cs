@@ -12,7 +12,7 @@ using financesFlow.Infra.DataAccess;
 namespace financesFlow.Infra.Migrations
 {
     [DbContext(typeof(financesFlowDbContext))]
-    [Migration("20250106201336_CriaTabelaUsuario")]
+    [Migration("20250114180037_CriaTabelaUsuario")]
     partial class CriaTabelaUsuario
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace financesFlow.Infra.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -39,9 +39,6 @@ namespace financesFlow.Infra.Migrations
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<long>("IdUsuario")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("MetodoPagamento")
                         .HasColumnType("int");
@@ -98,12 +95,17 @@ namespace financesFlow.Infra.Migrations
             modelBuilder.Entity("financesFlow.Dominio.Entidades.Despesa", b =>
                 {
                     b.HasOne("financesFlow.Dominio.Entidades.Usuario", "Usuario")
-                        .WithMany()
+                        .WithMany("Despesas")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("financesFlow.Dominio.Entidades.Usuario", b =>
+                {
+                    b.Navigation("Despesas");
                 });
 #pragma warning restore 612, 618
         }
