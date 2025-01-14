@@ -1,11 +1,14 @@
 ﻿using financesFlow.Aplicacao.useCase.Arquivo.Excel;
 using financesFlow.Aplicacao.useCase.Arquivo.Pdf;
+using financesFlow.Dominio.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 
 namespace financesFlow.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = Permissoes.ADMIN)]
 public class ArquivoController : Controller
 {
     [HttpGet("/gerarRelatorioExcel")]

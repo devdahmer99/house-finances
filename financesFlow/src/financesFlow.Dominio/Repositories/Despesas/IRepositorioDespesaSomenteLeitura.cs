@@ -5,6 +5,6 @@ public interface IRepositorioDespesaSomenteLeitura
 {
     Task<List<Despesa>> BuscarTudo();
     Task<Despesa?> BuscarPorId(long id);
-    Task<List<Despesa>> FiltraPorMes(DateOnly data);
+    Task<List<Despesa>> FiltraPorMes(Dominio.Entidades.Usuario user, DateOnly data);
     Task<decimal> BuscaTotalDespesas();
 }

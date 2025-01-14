@@ -1,8 +1,10 @@
 ﻿using financesFlow.Aplicacao.useCase.Arquivo.Pdf.Colors;
 using financesFlow.Aplicacao.useCase.Arquivo.Pdf.Fonts;
+using financesFlow.Dominio.Entidades;
 using financesFlow.Dominio.Extensões;
 using financesFlow.Dominio.Reports;
 using financesFlow.Dominio.Repositories.Despesas;
+using financesFlow.Dominio.Services.LoggedUser;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
@@ -17,25 +19,30 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
     private const string CURRENCY_SYMBOL = "R$";
     private const int HEIGHT_TABELA_DESPESAS = 25;
     private readonly IRepositorioDespesaSomenteLeitura _repositorio;
+    private readonly ILoggedUser _loggedUser;
 
-    public GeraArquivoPdfDespesaUseCase(IRepositorioDespesaSomenteLeitura repositorio)
+    public GeraArquivoPdfDespesaUseCase(IRepositorioDespesaSomenteLeitura repositorio, ILoggedUser loggedUser)
     {
         _repositorio = repositorio;
+        _loggedUser = loggedUser;
         GlobalFontSettings.FontResolver = new ResolverFontsDespesas();
 
     }
     public async Task<byte[]> GeraArquivo(DateOnly mes)
     {
-        var despesas = await _repositorio.FiltraPorMes(mes);
+        var loggedUser = await _loggedUser.Get();
+
+        var despesas = await _repositorio.FiltraPorMes(loggedUser, mes);
+
         if (despesas.Count == 0)
         {
             return [];
         }
 
-        var documento = CriaDocumentoPDF(mes);
+        var documento = CriaDocumentoPDF(loggedUser.Nome, mes);
         var pagina = CriaPaginaDoPdf(documento);
 
-        CriaCabecalhoComFoto(pagina);
+        CriaCabecalhoComFoto(loggedUser.Nome, pagina);
 
         var totalDespesas = despesas.Sum(desp => desp.ValorDespesa);
         CriaParagrafo(pagina, mes, totalDespesas);
@@ -91,11 +98,11 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
         return RenderizaPDF(documento);
     }
 
-    private Document CriaDocumentoPDF(DateOnly mes)
+    private Document CriaDocumentoPDF(string author,DateOnly mes)
     {
         var documento = new Document();
         documento.Info.Title = $"{ResourceReportGenerationMessages.TITULO} {mes.ToString("Y")}";
-        documento.Info.Author = "Eduardo Dahmer Correa";
+        documento.Info.Author = author;
 
         var style = documento.Styles["Normal"];
         style!.Font.Name = FontHelper.RALEWAY_REGULAR;
@@ -130,7 +137,7 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
         return file.ToArray();
     }
 
-    private void CriaCabecalhoComFoto(Section pagina)
+    private void CriaCabecalhoComFoto(string name, Section pagina)
     {
         var tabela = pagina.AddTable();
         tabela.AddColumn();
@@ -139,10 +146,11 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
         var linha = tabela.AddRow();
         var assembly = Assembly.GetExecutingAssembly();
         var diretorio = Path.GetDirectoryName(assembly.Location);
+
         var caminhoImagem = Path.Combine(diretorio!, "images", "perfil.png");
 
         linha.Cells[0].AddImage(caminhoImagem);
-        linha.Cells[1].AddParagraph("Olá, Eduardo Dahmer");
+        linha.Cells[1].AddParagraph($"Olá, {name}");
         linha.Cells[1].Format.Font = new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
         linha.Cells[1].VerticalAlignment = VerticalAlignment.Center;
     }
@@ -158,7 +166,7 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
         paragrafo.AddLineBreak();
 
         
-        paragrafo.AddFormattedText($"{CURRENCY_SYMBOL} {totalDespesas}", new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
+        paragrafo.AddFormattedText($"{CURRENCY_SYMBOL} {totalDespesas:f2}", new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
     }
 
     private Table CriaTabelaDespesas(Section pagina)
@@ -181,7 +189,7 @@ public class GeraArquivoPdfDespesaUseCase : IGeraArquivoPdfDespesaUseCase
 
     private void AdicionaValorParaDespesa(Cell cell, decimal valor)
     {
-        cell.AddParagraph($"{CURRENCY_SYMBOL} {valor}");
+        cell.AddParagraph($"{CURRENCY_SYMBOL} {valor:f2}");
         cell.Format.Font = new MigraDoc.DocumentObjectModel.Font { Name = FontHelper.WORKSANS_REGULAR, Size = 14, Color = ColorHelpers.BLACK };
         cell.Shading.Color = ColorHelpers.WHITE;
         cell.VerticalAlignment = VerticalAlignment.Center;

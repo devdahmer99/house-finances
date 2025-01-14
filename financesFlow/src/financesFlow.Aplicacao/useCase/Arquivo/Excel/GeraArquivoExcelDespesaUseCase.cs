@@ -1,22 +1,27 @@
 ﻿
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using financesFlow.Aplicacao.Reports;
 using financesFlow.Dominio.Enums;
 using financesFlow.Dominio.Repositories.Despesas;
+using financesFlow.Dominio.Services.LoggedUser;
 
 namespace financesFlow.Aplicacao.useCase.Arquivo.Excel;
 public class GeraArquivoExcelDespesaUseCase : IGeraArquivoExcelDespesaUseCase
 {
     private const string CURRENCY_SYMBOL = "R$";
     private readonly IRepositorioDespesaSomenteLeitura _repositorio;
-    public GeraArquivoExcelDespesaUseCase(IRepositorioDespesaSomenteLeitura repositorio)
+    private readonly ILoggedUser _loggedUser;
+    public GeraArquivoExcelDespesaUseCase(IRepositorioDespesaSomenteLeitura repositorio, ILoggedUser loggedUser)
     {
         _repositorio = repositorio;
+        _loggedUser = loggedUser;
     }
 
     public async Task<byte[]> GeraArquivo(DateOnly mes)
     {
-        var despesas = await _repositorio.FiltraPorMes(mes);
+        var loggedUser = await _loggedUser.Get();
+        var despesas = await _repositorio.FiltraPorMes(loggedUser, mes);
 
         if (despesas.Count == 0)
         {
@@ -24,7 +29,7 @@ public class GeraArquivoExcelDespesaUseCase : IGeraArquivoExcelDespesaUseCase
         }
 
         using var workbook = new XLWorkbook();
-        workbook.Author = "Eduardo Dahmer Correa";
+        workbook.Author = loggedUser.Nome;
         workbook.Style.Font.FontSize = 12;
 
         var planilha = workbook.Worksheets.Add(mes.ToString("Y"));

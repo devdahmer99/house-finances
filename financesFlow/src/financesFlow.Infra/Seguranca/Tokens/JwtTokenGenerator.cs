@@ -24,6 +24,7 @@ namespace financesFlow.Infra.Seguranca.Tokens
             {
                 new Claim(ClaimTypes.Name, usuario.Nome),
                 new Claim(ClaimTypes.Sid, usuario.IdentificadorUsuario.ToString()),
+                new Claim(ClaimTypes.Role, usuario.Permissao)
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor
