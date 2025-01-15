@@ -156,4 +156,7 @@
   <data name="NOME_REQUERIDO" xml:space="preserve">
     <value>O nome da despesa não pode ser vazio.</value>
   </data>
+  <data name="SENHA_DIGITADA_NAO_BATEM" xml:space="preserve">
+    <value>A senha digitada não confere</value>
+  </data>
 </root>

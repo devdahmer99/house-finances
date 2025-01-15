@@ -8,10 +8,17 @@ using financesFlow.Aplicacao.useCase.Usuarios.Criar;
 using financesFlow.Exception;
 using financesFlow.Exception.ExceptionsBase;
 using FluentAssertions;
+using WebApi.Test;
 
 namespace useCases.Test.Usuarios.Registrar;
-public class RegistrarUsuarioUseCaseTest
+public class RegistrarUsuarioUseCaseTest : IClassFixture<WebApi.Test.CustomWebApplicationFactory>
 {
+    private const string METHOD = "api/usuarios/registrausuario";
+    private readonly HttpClient _httpClient;
+    public RegistrarUsuarioUseCaseTest(CustomWebApplicationFactory webApplicationFactory)
+    {
+        _httpClient = webApplicationFactory.CreateClient();
+    }
     [Fact]
     public async Task Success()
     {

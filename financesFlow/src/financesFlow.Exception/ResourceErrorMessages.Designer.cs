@@ -124,11 +124,29 @@ namespace financesFlow.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O nome da despesa não pode ser vazio..
+        /// </summary>
+        public static string NOME_REQUERIDO {
+            get {
+                return ResourceManager.GetString("NOME_REQUERIDO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O nome não pode ser vazio!.
         /// </summary>
         public static string NOME_VAZIO {
             get {
                 return ResourceManager.GetString("NOME_VAZIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A senha digitada não confere.
+        /// </summary>
+        public static string SENHA_DIGITADA_NAO_BATEM {
+            get {
+                return ResourceManager.GetString("SENHA_DIGITADA_NAO_BATEM", resourceCulture);
             }
         }
         

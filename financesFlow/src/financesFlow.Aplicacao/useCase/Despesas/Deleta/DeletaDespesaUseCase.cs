@@ -8,13 +8,15 @@ namespace financesFlow.Aplicacao.useCase.Despesas.Deleta;
 public class DeletaDespesaUseCase : IDeletaDespesaUseCase
 {
     private readonly IRepositorioDepesaSomenteEscrita _repositorioDepesaSomenteEscrita;
+    private readonly IRepositorioDespesaSomenteLeitura _repositorio;
     private readonly IUnidadeDeTrabalho _unidadeDeTrabalho;
     private readonly ILoggedUser _loggedUser;
-    public DeletaDespesaUseCase(IRepositorioDepesaSomenteEscrita repositorioDepesaSomenteEscrita,
+    public DeletaDespesaUseCase(IRepositorioDepesaSomenteEscrita repositorioDepesaSomenteEscrita, IRepositorioDespesaSomenteLeitura repositorio,
         IUnidadeDeTrabalho unidadeDeTrabalho, ILoggedUser loggedUser)
     {
-        _unidadeDeTrabalho = unidadeDeTrabalho;
         _repositorioDepesaSomenteEscrita = repositorioDepesaSomenteEscrita;
+        _repositorio = repositorio;
+        _unidadeDeTrabalho = unidadeDeTrabalho;       
         _loggedUser = loggedUser;
     }
 

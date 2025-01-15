@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using WebApi.Test.Resources;
 
 namespace WebApi.Test
 {
@@ -13,6 +14,10 @@ namespace WebApi.Test
     {
         private financesFlow.Dominio.Entidades.Usuario? _user;
         private string? _password;
+        public ExpenseIdentityManager Expense_Admin { get; private set; } = default!;
+        public ExpenseIdentityManager Expense_MemberTeam { get; private set; } = default!;
+        public UserIdentityManager User_Team_Member { get; private set; } = default!;
+        public UserIdentityManager User_Admin { get; private set; } = default!;
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             

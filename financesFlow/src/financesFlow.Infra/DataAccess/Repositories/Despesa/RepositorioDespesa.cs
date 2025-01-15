@@ -20,9 +20,9 @@ internal class RepositorioDespesa : IRepositorioDespesaSomenteLeitura, IReposito
         _db.Despesas.Update(despesa);
     }
 
-    async Task<Dominio.Entidades.Despesa?> IRepositorioDespesaSomenteLeitura.BuscarPorId(long id)
+    async Task<Dominio.Entidades.Despesa?> IRepositorioDespesaSomenteLeitura.BuscarPorId(Dominio.Entidades.Usuario user, long id)
     {
-        return await _db.Despesas.AsNoTracking().FirstOrDefaultAsync(des => des.Id == id);
+        return await _db.Despesas.AsNoTracking().FirstOrDefaultAsync(des => des.Id == id && des.UsuarioId == user.Id);
     }
 
     async Task<Dominio.Entidades.Despesa?> IRepositorioDespesaSomenteAtualizacao.BuscaPorId(Dominio.Entidades.Usuario user, long id)
@@ -67,5 +67,15 @@ internal class RepositorioDespesa : IRepositorioDespesaSomenteLeitura, IReposito
     {
         decimal totalDespesas = await _db.Despesas.SumAsync(des => des.ValorDespesa);
         return totalDespesas;
+    }
+
+    public Task<List<Dominio.Entidades.Despesa>> BuscarTudo(Dominio.Entidades.Usuario user)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Dominio.Entidades.Despesa?> BuscarPorId(Dominio.Entidades.Usuario user, long id)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -8,10 +8,18 @@ using financesFlow.Dominio.Entidades;
 using financesFlow.Exception;
 using financesFlow.Exception.ExceptionsBase;
 using FluentAssertions;
+using WebApi.Test;
 
 namespace UseCases.Test.Usuarios.Login;
-public class LoginUsuarioUseCaseTest
+public class LoginUsuarioUseCaseTest : IClassFixture<WebApi.Test.CustomWebApplicationFactory>
 {
+    private const string METHOD = "api/logiun/efetualogin";
+    private readonly HttpClient _httpClient;
+    public LoginUsuarioUseCaseTest(CustomWebApplicationFactory webApplicationFactory)
+    {
+        _httpClient = webApplicationFactory.CreateClient();
+    }
+
     [Fact]
     public async Task Sucess()
     {
