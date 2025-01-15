@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using financesFlow.Comunicacao.Enums;
 using financesFlow.Dominio.Entidades;
 using financesFlow.Dominio.Enums;
 
@@ -32,13 +31,13 @@ public class DespesaBuilder
             .RuleFor(r => r.Descricao, faker => faker.Commerce.ProductDescription())
             .RuleFor(r => r.DataDespesa, faker => faker.Date.Past())
             .RuleFor(r => r.ValorDespesa, faker => faker.Random.Decimal(min: 1, max: 1000))
-            .RuleFor(r => r.MetodoPagamento, faker => faker.PickRandom<<MetodoPagamento>>())
-            .RuleFor(r => r.UserId, _ => user.Id)
-            .RuleFor(r => r.Tags, faker => faker.Make(1, () => new CashFlow.Domain.Entities.Tag
+            .RuleFor(r => r.MetodoPagamento, faker => faker.PickRandom<MetodoPagamento>())
+            .RuleFor(r => r.UsuarioId, _ => user.Id)
+            .RuleFor(r => r.Tags, faker => faker.Make(1, () => new financesFlow.Dominio.Entidades.Tag
             {
                 Id = 1,
-                Value = faker.PickRandom<financesFlow.Domain.Enums.Tag>(),
-                ExpenseId = 1
+                Value = faker.PickRandom<financesFlow.Dominio.Enums.Tag>(),
+                DespesaId = 1
             }));
     }
 }

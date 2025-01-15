@@ -7,15 +7,15 @@ using financesFlow.Exception.ExceptionsBase;
 namespace financesFlow.Aplicacao.useCase.Despesas.Deleta;
 public class DeletaDespesaUseCase : IDeletaDespesaUseCase
 {
-    private readonly IRepositorioDepesaSomenteEscrita _repositorioDepesaSomenteEscrita;
-    private readonly IRepositorioDespesaSomenteLeitura _repositorio;
+    private readonly IRepositorioDepesaSomenteEscrita _repositorio;
+    private readonly IRepositorioDespesaSomenteLeitura _repositorioLeitura;
     private readonly IUnidadeDeTrabalho _unidadeDeTrabalho;
     private readonly ILoggedUser _loggedUser;
     public DeletaDespesaUseCase(IRepositorioDepesaSomenteEscrita repositorioDepesaSomenteEscrita, IRepositorioDespesaSomenteLeitura repositorio,
         IUnidadeDeTrabalho unidadeDeTrabalho, ILoggedUser loggedUser)
     {
-        _repositorioDepesaSomenteEscrita = repositorioDepesaSomenteEscrita;
-        _repositorio = repositorio;
+        _repositorio = repositorioDepesaSomenteEscrita;
+        _repositorioLeitura = repositorio;
         _unidadeDeTrabalho = unidadeDeTrabalho;       
         _loggedUser = loggedUser;
     }
@@ -23,12 +23,13 @@ public class DeletaDespesaUseCase : IDeletaDespesaUseCase
     public async Task Execute(long id)
     {
         var loggedUser = await _loggedUser.Get();
-        var result = await _repositorioDepesaSomenteEscrita.DeletaDespesa(loggedUser, id);
-        if( result == false)
+        var expense = await _repositorioLeitura.BuscarPorId(loggedUser, id);
+        if (expense is null)
         {
             throw new NotFoundException(ResourceErrorMessages.DESPESA_NAO_ENCONTRADA);
         }
 
+        await _repositorio.DeletaDespesa(id);
         await _unidadeDeTrabalho.Commit();
     }
 }

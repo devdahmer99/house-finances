@@ -5,20 +5,15 @@ using CommonTestsUtilitis.Token;
 using CommonTestUtilities.Repositories;
 using CommonTestUtilities.Requests;
 using financesFlow.Aplicacao.useCase.Usuarios.Criar;
+using financesFlow.Dominio.Repositories.Usuarios;
 using financesFlow.Exception;
 using financesFlow.Exception.ExceptionsBase;
 using FluentAssertions;
-using WebApi.Test;
+using Moq;
 
 namespace useCases.Test.Usuarios.Registrar;
-public class RegistrarUsuarioUseCaseTest : IClassFixture<WebApi.Test.CustomWebApplicationFactory>
+public class RegistrarUsuarioUseCaseTest
 {
-    private const string METHOD = "api/usuarios/registrausuario";
-    private readonly HttpClient _httpClient;
-    public RegistrarUsuarioUseCaseTest(CustomWebApplicationFactory webApplicationFactory)
-    {
-        _httpClient = webApplicationFactory.CreateClient();
-    }
     [Fact]
     public async Task Success()
     {
@@ -55,7 +50,6 @@ public class RegistrarUsuarioUseCaseTest : IClassFixture<WebApi.Test.CustomWebAp
         result.Where(ex => ex.BuscaErrors().Count == 1 && ex.BuscaErrors().Contains(ResourceErrorMessages.EMAIL_EXISTE));
     }
 
-
     private CriaUsuarioUseCase CreateUseCase(string? email = null)
     {
         var mapper = MapperBuilder.Build();
@@ -63,14 +57,13 @@ public class RegistrarUsuarioUseCaseTest : IClassFixture<WebApi.Test.CustomWebAp
         var repositorio = RepositorioUsuarioSomenteEscrita.Build();
         var encriptador = new EncriptadorSenhaBuilder().Build();
         var gerarTokenAcesso = JwtTokenGeneratorBuilder.Build();
-        var repositorioLeitura = new RepositorioUsuarioSomenteLeituraBuilder().Build();
+        var repositorioLeituraMock = new Mock<IRepositorioUsuarioSomenteLeitura>();
 
-        if(string.IsNullOrWhiteSpace(email) == false)
+        if (!string.IsNullOrWhiteSpace(email))
         {
-            repositorioLeitura.ExisteUsuarioAtivoComEmail(email);
+            repositorioLeituraMock.Setup(r => r.ExisteUsuarioAtivoComEmail(email)).ReturnsAsync(true);
         }
 
-        return new CriaUsuarioUseCase(encriptador, repositorioLeitura, repositorio, unidade, mapper, gerarTokenAcesso);
+        return new CriaUsuarioUseCase(encriptador, repositorioLeituraMock.Object, repositorio, unidade, mapper, gerarTokenAcesso);
     }
-   
 }

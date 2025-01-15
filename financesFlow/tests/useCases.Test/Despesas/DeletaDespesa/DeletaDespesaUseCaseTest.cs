@@ -4,9 +4,11 @@ using CommonTestsUtilitis.Repositories;
 using CommonTestUtilities.Entities;
 using financesFlow.Aplicacao.useCase.Despesas.Deleta;
 using financesFlow.Dominio.Entidades;
+using financesFlow.Dominio.Repositories.Despesas;
 using financesFlow.Exception;
 using financesFlow.Exception.ExceptionsBase;
 using FluentAssertions;
+using Moq;
 
 namespace UseCases.Test.Despesas.DeletaDespesa
 {
@@ -48,5 +50,5 @@ namespace UseCases.Test.Despesas.DeletaDespesa
             return new DeletaDespesaUseCase(repositoryWriteOnly, repository, unitOfWork, loggedUser);
         }
 
-        }
+    }
     }

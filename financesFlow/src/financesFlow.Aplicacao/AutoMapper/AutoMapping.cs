@@ -14,19 +14,20 @@ public class AutoMapping : Profile
         RetornaEntidade();
     }
 
-
     public void BuscaEntidade()
     {
         CreateMap<RequestDespesaJson, Despesa>();
         CreateMap<RequestCriaUsuarioJson, Usuario>()
             .ForMember(dest => dest.Senha, conf => conf.Ignore());
+        CreateMap<Comunicacao.Enums.Tag, Tag>();
     }
-
 
     public void RetornaEntidade()
     {
-        CreateMap<Despesa, ResponseDespesaJson>();
+        CreateMap<Despesa, ResponseDespesaJson>()
+            .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags.Select(tag => tag.Value).ToList()));
         CreateMap<Despesa, ResponseShortDepesaJson>();
         CreateMap<Usuario, ResponseCriaUsuarioJson>();
+        CreateMap<Usuario, RequestUserProfileJson>();
     }
 }

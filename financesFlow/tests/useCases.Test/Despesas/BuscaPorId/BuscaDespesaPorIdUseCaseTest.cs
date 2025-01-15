@@ -55,3 +55,4 @@ namespace UseCases.Test.Despesas.BuscaPorId
             return new BuscaDespesaPorIdUseCase(repository, mapper, loggedUser);
         }
     }
+}

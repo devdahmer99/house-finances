@@ -8,6 +8,7 @@ namespace CommonTestsUtilitis.Repositories
         public static IRepositorioDepesaSomenteEscrita Build()
         {
             var mock = new Mock<IRepositorioDepesaSomenteEscrita>();
+
             return mock.Object;
         }
     }

@@ -2,6 +2,7 @@
 using CommonTestsUtilitis.Login;
 using CommonTestsUtilitis.Repositories;
 using CommonTestUtilities.Entities;
+using financesFlow.Aplicacao.useCase.Arquivo.Excel;
 using financesFlow.Aplicacao.useCase.Arquivo.Pdf;
 using financesFlow.Dominio.Entidades;
 using FluentAssertions;
@@ -38,7 +39,7 @@ namespace UseCases.Test.Arquivos.Pdf
             var repository = new RepositorioDespesaSomenteLeituraBuilder().FiltraPorMes(user, expenses).Build();
             var loggedUser = LoggedUserBuilder.Build(user);
 
-            return new GeraDespesasExcelUseCaseTest(repository, loggedUser);
+            return new GeraArquivoPdfDespesaUseCase(repository, loggedUser);
         }
     }
 }

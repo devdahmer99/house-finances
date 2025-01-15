@@ -76,6 +76,7 @@ namespace UseCases.Test.Despesas.Atualizar
             var unitOfWork = UnidadeDeTrabalhoBuilder.Build();
             var loggedUser = LoggedUserBuilder.Build(user);
 
-            return new AtualizaDespesaUseCase(repository, unitOfWork, mapper,loggedUser);
+            return new AtualizaDespesaUseCase(repository, unitOfWork, mapper, loggedUser);
         }
     }
+}

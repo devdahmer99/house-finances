@@ -3,14 +3,15 @@
 namespace financesFlow.Exception.ExceptionsBase;
 public class ErrorOnValidationException : financesFlowException
 {
-    private readonly List<string> _errors; 
+    private readonly List<string> _errors;
 
     public override int StatusCode => (int)HttpStatusCode.BadRequest;
-    public ErrorOnValidationException(List<string> errorMessages) : base(string.Empty)
+
+    public ErrorOnValidationException(List<string> errorMessages) : base(string.Join("; ", errorMessages))
     {
         if (errorMessages == null || !errorMessages.Any())
         {
-            throw new ArgumentException("Error messages cannot be null or empty", nameof(errorMessages));
+            throw new ArgumentException("Mensagens de erro não podem ser nulas ou vazias", nameof(errorMessages));
         }
         _errors = errorMessages;
     }

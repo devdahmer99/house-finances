@@ -7,6 +7,7 @@ using CommonTestsUtilitis.Requests;
 using financesFlow.Aplicacao.useCase.Despesas.Registrar;
 using financesFlow.Dominio.Entidades;
 using financesFlow.Exception;
+using financesFlow.Exception.ExceptionsBase;
 using FluentAssertions;
 
 namespace UseCases.Test.Despesas
@@ -29,17 +30,17 @@ namespace UseCases.Test.Despesas
         [Fact]
         public async Task Error_Title_Empty()
         {
-           var loggedUser = UserBuilder.Build();
-           var request = RequestDespesaJsonBuilder.Build();
-           request.NomeDespesa = string.Empty;
+            var loggedUser = UserBuilder.Build();
+            var request = RequestDespesaJsonBuilder.Build();
+            request.NomeDespesa = string.Empty;
 
-           var useCase = CreateUseCase(loggedUser);
+            var useCase = CreateUseCase(loggedUser);
 
-           var act = async () => await useCase.Execute(request);
+            var act = async () => await useCase.Execute(request);
 
-           var result = await act.Should().ThrowAsync<ValidationException>();
+            var result = await act.Should().ThrowAsync<ErrorOnValidationException>();
 
-            result.Where(ex => ex.Message.Count() == 1 && ex.Message.Contains(ResourceErrorMessages.NOME_VAZIO));
+            result.WithMessage(ResourceErrorMessages.NOME_VAZIO);
         }
 
         private RegistrarDespesaUseCase CreateUseCase(Usuario user)
