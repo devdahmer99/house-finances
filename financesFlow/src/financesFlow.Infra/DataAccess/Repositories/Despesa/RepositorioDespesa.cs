@@ -78,4 +78,9 @@ internal class RepositorioDespesa : IRepositorioDespesaSomenteLeitura, IReposito
     {
         throw new NotImplementedException();
     }
+
+    public Task<bool> DeletaDespesa(long id)
+    {
+        throw new NotImplementedException();
+    }
 }

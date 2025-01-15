@@ -23,9 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValidatorsTests", "tests\Va
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonTestsUtilitis", "tests\CommonTestsUtilitis\CommonTestsUtilitis.csproj", "{6A715EB3-E269-481C-8E7F-FEA42CA14E54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseCases.Test", "tests\useCases.Test\UseCases.Test.csproj", "{717A1D75-0695-45B4-9CB5-D2A434EC4413}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseCases.Test", "tests\useCases.Test\UseCases.Test.csproj", "{717A1D75-0695-45B4-9CB5-D2A434EC4413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Test", "tests\WebApi.Test\WebApi.Test.csproj", "{46CC1C0A-C2B3-43C5-BC3B-284ACF1ACEC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Test", "tests\WebApi.Test\WebApi.Test.csproj", "{46CC1C0A-C2B3-43C5-BC3B-284ACF1ACEC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
