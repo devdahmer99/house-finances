@@ -1,18 +1,15 @@
-﻿using financesFlow.Dominio.Entidades;
-using PdfSharp.Drawing;
+﻿using CashFlow.Domain.Entities;
 
-namespace WebApi.Test.Resources
+namespace WebApi.Test.Resources;
+public class ExpenseIdentityManager
 {
-    public class ExpenseIdentityManager
+    private readonly Expense _expense;
+
+    public ExpenseIdentityManager(Expense expense)
     {
-        private readonly Despesa _expense;
-
-        public ExpenseIdentityManager(Despesa expense)
-        {
-            _expense = expense;
-        }
-
-        public long GetId() => _expense.Id;
-        public DateTime GetDate() => _expense.DataDespesa;
+        _expense = expense;
     }
+
+    public long GetId() => _expense.Id;
+    public DateTime GetDate() => _expense.Date;
 }
